@@ -1,0 +1,518 @@
+<html>
+
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html">
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 3.0">
+<title>User's Guide</title>
+<meta NAME="Template" CONTENT="D:\MSOffice\Office\HTML.DOT">
+</head>
+
+<body background="images/Background.jpg" text="#000075" topmargin="40" leftmargin="20">
+<div align="center"><center>
+
+<table BORDER="7" CELLpaddING="0" cellspacing="3">
+  <tr>
+    <td VALIGN="MIDDLE" ROWSPAN="2"><img SRC="images/Wizard.gif" border="0" WIDTH="60"
+    HEIGHT="70" ALT="Wizard.gif (17222 bytes)"></td>
+    <td VALIGN="MIDDLE"><h1 ALIGN="CENTER">COSC 4F90 Project:<br>
+    A Microkernel-Based Educational Operating System in Java</h1>
+    </td>
+    <td VALIGN="MIDDLE" rowspan="2"><img SRC="images/BrockLogo.gif" WIDTH="67" HEIGHT="75"></td>
+  </tr>
+</table>
+</center></div>
+
+<p ALIGN="CENTER"><img SRC="images/Separator.gif" WIDTH="100%" HEIGHT="8"
+ALT="Separator.gif (1602 bytes)"></p>
+<em>
+
+<h1 ALIGN="CENTER">User's Guide</h1>
+</em>
+
+<h3 ALIGN="CENTER">Student: <em>Tyrone Nicholas</em><br>
+Supervisor: <em>Prof. Jerzy A. Barchanski</em><br>
+Term: <em>December. 1998</em></h3>
+
+<blockquote>
+  <p><a href="#Scope"><strong>Scope of This Document</strong></a></p>
+  <p><a href="#Introduction"><strong>Introduction to TOS</strong></a></p>
+  <p><a href="#Connecting"><strong>Connecting to TOS</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#JAVA">JAVA Environment Variable</a></p>
+      <p><a href="#CLASSPATH">CLASSPATH Environment Variable</a></p>
+      <p><a href="#startcon">Starting the Console</a></p>
+      <p><a href="#conlaunch">Connecting to a Console</a></p>
+      <p><a href="#dynamic">Dynamic TCP/IP Addressing</a></p>
+      <p><a href="#Reconnection">Reconnection</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#fileSystem"><strong>The TOS File System</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#Single">Single Global Namespace</a></p>
+      <p><a href="#Directories">Directories</a></p>
+      <p><a href="#FileNames">File Names</a></p>
+      <p><a href="#Physical">Physical Disk Servers</a></p>
+      <p><a href="#filetypes">Types of Files</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#Security"><strong>Security in the File System</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#passwords">Entering Passwords</a></p>
+      <p><a href="#removing">Removing Passwords</a></p>
+      <p><a href="#FilePermissions">File Permissions</a></p>
+      <p><a href="#Settings">Setting Permissions</a></p>
+      <p><a href="#Accessing">Accessing a Protected File</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#Navigating"><strong>Navigating in TOS</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#Working">Working Directory</a></p>
+      <p><a href="#Moving">Moving Around</a></p>
+      <p><a href="#Basic">Basic File Operations</a></p>
+      <p><a href="#Directory">Directory Operations</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#Editing"><strong>Editing Files in TOS</strong></a></p>
+  <p><a href="#Compiling"><strong>Compiling and Running Java Programs in TOS</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#Selecting">Selecting a Compiler</a></p>
+      <p><a href="#source">Compiling Java Source Files</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#importing"><strong>Importing and Exporting Files from TOS to Your Host</strong></a></p>
+  <blockquote>
+    <blockquote>
+      <p><a href="#text">Text and Binary Modes</a></p>
+      <p><a href="#fileimport">Importing Files</a></p>
+      <p><a href="#fileexport">Exporting Files</a></p>
+    </blockquote>
+  </blockquote>
+  <p><a href="#script"><strong>TOS Script Files</strong></a></p>
+  <p><a href="#exit"><strong>Exiting TOS</strong></a></p>
+  <p><a href="#command"><strong>TOS Command Summary</strong></a></p>
+</blockquote>
+
+<blockquote>
+  <h2><a name="Scope">Scope of This Document</a> </h2>
+  <p ALIGN="JUSTIFY">This guide is intended for day-to-day use of the TOS console. For
+  information on running and administering a TOS system, see the <a
+  HREF="Administrator.html">Administrator&#146;s Guide</a> . For information on developing
+  applications to run under TOS, see the Developer&#146;s Guide. For a technical overview of
+  TOS design, implementation, internal structure, and possible extensions, see Tyrone&#146;s
+  Operating System: An Educational Operating System in Java. </p>
+  <h2><a name="Introduction">Introduction to TOS</a> </h2>
+  <p ALIGN="JUSTIFY">Tyrone&#146;s Operating System, TOS, was prepared as a thesis for COSC
+  4F90 at Brock University. It is intended to be used in senior-year undergraduate courses
+  in operating system implementation.</p>
+  <p ALIGN="JUSTIFY">TOS is a distributed operating system. Unlike conventional operating
+  systems, which run on only one computer, TOS can run on any number of different computers
+  simultaneously, as long as they are connected over a network running the TCP/IP protocol
+  suite. All the computers running TOS will share a common file system and common access to
+  the same system objects. Programs running on one computer can coordinate their activities
+  and send information to programs on another quickly and easily.</p>
+  <p ALIGN="JUSTIFY">Another difference between most operating systems is that TOS is not a
+  native operating system. It is not booted by a computer when it is turned on and it does
+  not deal directly with the computer&#146;s hardware. Instead, it runs on top of the
+  computer&#146;s native operating system. </p>
+  <p ALIGN="JUSTIFY">The basic modules enabling you to use TOS have been prepared for the
+  UNIX family, Microsoft Windows 95/NT, and the Macintosh System 7.6 or later. </p>
+  <h2><a name="Connecting">Connecting to TOS</a> </h2>
+  <p ALIGN="JUSTIFY">Note: Currently the TOS console is not supported on the Macintosh. See
+  the <a href="final.html">Final Report</a> for an explanation of the technical reasons for
+  this.</p>
+  <h3><a name="JAVA">JAVA Environment Variable</a> </h3>
+  <p ALIGN="JUSTIFY">The JAVA environment variable must be set to the name of the executable
+  containing the console version of the Java run-time engine. If you are using the Sun JDK
+  or JRE, you may use either &quot;java&quot; or &quot;jre&quot; for this variable. If you
+  are using the Microsoft VM for Java, use &quot;jview&quot;, located in your Windows
+  directory. Do not use the windowed versions of the run-time engine, such as
+  &quot;javaw&quot; or &quot;wjview&quot;.</p>
+  <h3><a name="CLASSPATH">CLASSPATH Environment Variable </a></h3>
+  <p ALIGN="JUSTIFY">Your CLASSPATH environment variable must also point to the same
+  directory containing the TOS executables. This directory will contain a subdirectory
+  called tos which contains the Java class files that implement TOS. Make sure that your
+  CLASSPATH points to the parent of tos, not to tos itself.</p>
+  <h3><a name="startcon">Starting the Console</a> </h3>
+  <p ALIGN="JUSTIFY">To start the TOS console, simply type Console at any command-line
+  prompt. You may also make use of any other method your host offers for starting
+  applications, such as creating a desktop shortcut in Windows or an alias in UNIX.</p>
+  <p ALIGN="JUSTIFY">You will see a command-line prompt saying simply TOS:&gt;. This is the
+  TOS prompt. From here, you can enter commands simply by typing the command name, its
+  parameters, and &lt;enter&gt; or &lt;return&gt;.</p>
+  <h3><a name="conlaunch">Connecting a Console to a Launcher</a></h3>
+  <p ALIGN="JUSTIFY">You will not be able enter any commands in TOS (except exit) without
+  connecting to a launcher. The syntax for doing this is:</p>
+  <i><p>connect host[:port]</i> </p>
+  <p ALIGN="JUSTIFY">where host refers to either the qualified network name or IP address or
+  the machine running a TOS launcher, and port refers to the TCP/IP port number the launcher
+  is running on. If you do not specify a port number, it will default to 1099.</p>
+  <p ALIGN="JUSTIFY">So if you are connecting to a launcher running on port 1101 of a host
+  with IP address 139.57.96.16, you would enter </p>
+  <i><p>connect spartan.ac.brocku.ca:1101</i> </p>
+  <p ALIGN="JUSTIFY">If you were running on a machine called sandcastle and wished to
+  connect to a launcher also running on sandcastle, on port 1105, enter</p>
+  <i><p>connect sandcastle:1105</i> </p>
+  <h3><a name="dynamic">Dynamic TCP/IP Addressing</a> </h3>
+  <p ALIGN="JUSTIFY">The machine running the launcher you are connecting to must be linked
+  to the one you are running the console from on a network supporting TCP/IP. </p>
+  <p ALIGN="JUSTIFY">If that machine uses dynamic TCP/IP addressing, which is generally the
+  case for machines using a dial-up network connecting, and often also for PC or Macintosh
+  workstations, you must make sure that the IP address you are using corresponds to the one
+  in use at the time. This may preclude using the connect command in a script file.</p>
+  <h3><a name="Reconnection">Reconnection </a></h3>
+  <p ALIGN="JUSTIFY">If you wish during a single console session to connect to a different
+  launcher, or even if you need to reconnect to the first because it crashed and was
+  restarted, you must use the disconnect command before running connect again. </p>
+  <p ALIGN="JUSTIFY">This is because each connection to a launcher does not persist across
+  different execution instances of the launcher. If the launcher stops, you must disconnect
+  and connect again.</p>
+  <h2><a name="fileSystem">The TOS File System</a></h2>
+  <h3><a name="Single">Single Global Namespace</a> </h3>
+  <p ALIGN="JUSTIFY">TOS&#146; file system is based largely on the UNIX model. There can be
+  any number disk servers on different machines within the TOS system, but system
+  administrators may mount different disks to any directory path (see the <a
+  HREF="Administrator.html">Administrator&#146;s Guide</a> for further details). The overall
+  effect is to resemble a single large virtual disk. </p>
+  <p ALIGN="JUSTIFY">This is in contrast to Microsoft and Apple operating systems, where
+  every path name includes a reference to the physical disk partition on which a file is
+  located.</p>
+  <h3><a name="Directories">Directories</a> </h3>
+  <p ALIGN="JUSTIFY">As in UNIX, there is a central root directory referred to as /. From
+  there, a hierarchical tree structure of directories is laid out, using / as the path
+  separator. There is no fixed limit on the number of files within any single directory,
+  other than the limits applicable to the physical disk the file or directory is actually
+  located on (see below).</p>
+  <h3><a name="FileNames">File Names</a> </h3>
+  <p ALIGN="JUSTIFY">You can refer to a file by either its absolute path name or its
+  relative path name, the name comparable to your working directory. This follows the same
+  conventions as in both UNIX and MS-DOS. So a file named foo located in directory mydir has
+  the absolute path name /mydir/foo. If you are in the directory otherdir, another
+  subdirectory of root, you may use the .. operator to refer to your immediate parent. In
+  that case foo&#146;s path, relative to you, becomes ../mydir/foo. A file myfile located in
+  otherdir can be simply referred to as myfile (relative) or /otherdir/myfile.</p>
+  <p ALIGN="JUSTIFY">Files may have a maximum of 255 characters in their names. TOS will not
+  stop you from creating two files in the same directory with the same name, but if you do
+  you will not be able to access the second file until you move or rename the first.</p>
+  <p ALIGN="JUSTIFY">File names may not contain either the path separator character (/) or
+  the colon (:) character, which TOS uses for internal operations. Spaces also will not be
+  recognized as part of a filename and will result in a syntax error. You are also advised
+  not to use the path separator character for your host (\ on Windows).</p>
+  <h3><a name="Physical">Physical Disk Servers</a> </h3>
+  <p ALIGN="JUSTIFY">You may often find that files are unavailable. The most common reason
+  for this is that the TOS disk server in which the file&#146;s directory is mounted is no
+  longer running. You will not be able to access the file until it is started again. See the
+  <a HREF="Administrator.html">Administrator&#146;s Guide</a> for instructions.</p>
+  <p ALIGN="JUSTIFY">Each of the disks has a limit on both the overall quantity of data it
+  can hold and the number of files it can hold. These restrictions serve as the only limits
+  on the size of any individual file or directory &#150; neither can grow so large as to
+  break their disk&#146;s limits. System administrators set these limits when the disk is
+  created (see the <a HREF="Administrator.html">Administrator&#146;s Guide</a> ). They can
+  view this information later but not change it.</p>
+  <h3><a name="filetypes">Types of Files </a></h3>
+  <p ALIGN="JUSTIFY">Files can contain binary or character data. Character files use the
+  Unicode character encoding system, which supports a wide variety of human languages, each
+  with its range of symbols and accents.</p>
+  <h2><a name="Security">Security in the File System</a></h2>
+  <h3><a name="passwords">Entering Passwords</a> </h3>
+  <p ALIGN="JUSTIFY">Security in TOS is based on assigning passwords to files. Any user can
+  issue a password on a file. The command to do this is:</p>
+  <i><p>protect filename [oldpassword]</i> </p>
+  <p ALIGN="JUSTIFY">You must enter the correct value for oldpassword if the file already
+  has a password. If it does not, omit this parameter.</p>
+  <p ALIGN="JUSTIFY">You will then be prompted for a new password. The new password may be
+  of any length and may use any combination of characters except spaces. The password
+  characters are not hidden on the screen, so be sure your enemies aren&#146;t watching.</p>
+  <h3><a name="removing">Removing Passwords </a></h3>
+  <p ALIGN="JUSTIFY">To remove a password, simply use protect and leave the new password
+  blank when prompted to enter one.</p>
+  <h3><a name="FilePermissions">File Permissions </a></h3>
+  <p ALIGN="JUSTIFY">Once you have placed a password on a file, you may select the
+  file&#146;s permissions. These permissions place limits on what users can do with the file
+  without entering its password. </p>
+  <p ALIGN="JUSTIFY">Read permission enables users to be able to read the contents of the
+  file. They can access the file&#146;s contents but may not change its contents.</p>
+  <p ALIGN="JUSTIFY">Write permission enables users to change the contents of the file. This
+  includes being able to completely overwrite its contents if they wish.</p>
+  <p ALIGN="JUSTIFY">Execute permission is relevant only to Java class files and TOS script
+  files. It enables the class files or scripts to be run from the TOS console.</p>
+  <h3><a name="Settings">Setting Permissions</a> </h3>
+  <p ALIGN="JUSTIFY">Merely choosing a password does not, by itself, have an effect on the
+  ability of other users to access a file without knowing the password. You must set the
+  file&#146;s permission bits, which again follow the model of UNIX. The syntax is:</p>
+  <i><p>chmod filename permissions password</i> </p>
+  <p ALIGN="JUSTIFY">The permissions parameter is a logical OR of three bits. The left-most
+  bit represents read permission, the middle bit is write permission, and the right-most bit
+  is for execute permission.</p>
+  <p ALIGN="JUSTIFY">For the uninitiated in bitwise arithmetic, here are the values to be
+  used for difference combinations:</p>
+  <ul>
+    <li>0 &#150; None </li>
+    <li>1 &#150; Execute only </li>
+    <li>2 &#150; Write only </li>
+    <li>3 &#150; Write and execute </li>
+    <li>4 &#150; Read only </li>
+    <li>5 &#150; Read and execute </li>
+    <li>6 &#150; Read and write </li>
+    <li>7 &#150; Read, write, and execute </li>
+  </ul>
+  <p>Values 8 and above will produce an error message. </p>
+  <h3><a name="Accessing">Accessing a Protected File </a></h3>
+  <p ALIGN="JUSTIFY">If the file&#146;s permissions permit the operation you wish to
+  execute, you do not need to enter a password when accessing the file. If they do, the last
+  parameter in the command you enter must be the password.</p>
+  <p ALIGN="JUSTIFY">Consider trying to use the export command on a file named myfile, with
+  password mypassword, that has write-only permission. Export requires read permission,
+  which the file doesn&#146;t have. So the user must supply its password, as follows:</p>
+  <i><p>export myfile hostfile mypassword</i> </p>
+  <p ALIGN="JUSTIFY">(See the section Importing and Exporting Files for details on export.)</p>
+  <p ALIGN="JUSTIFY">Note: TOS does not yet make use of passwords for operations involving
+  more than one file, that is copy and move. Files being copied and moved must be left
+  unprotected in the current version of TOS.</p>
+  <h2><a name="Navigating">Navigating in TOS</a></h2>
+  <h3><a name="Working">Working Directory</a> </h3>
+  <p ALIGN="JUSTIFY">Your current working directory will be contained within the TOS prompt.
+  It will be prepended to any non-absolute pathname you enter for any command. </p>
+  <h3><a name="Moving">Moving Around </a></h3>
+  <p ALIGN="JUSTIFY">Change the working directory using the cd command. TOS will
+  automatically locate the correct TOS disk server and connect you to it behind the scenes
+  if it is available. If it is not, you will not be able to complete the cd operation and a
+  warning message will appear. As always, you may use either absolute or relative names to
+  move around.</p>
+  <h3><a name="Basic">Basic File Operations </a></h3>
+  <p ALIGN="JUSTIFY"><em>Copy</em>, or <em>cp</em>, creates a second copy of a file at
+  another location.</p>
+  <p ALIGN="JUSTIFY"><em>Move</em>, or <em>mv</em>, creates a copy of a file at another
+  location and deletes the original file.</p>
+  <p ALIGN="JUSTIFY"><em>Delete</em>, or <em>del</em>, or <em>rm</em>, deletes a file. Write
+  permission is required.</p>
+  <h3><a name="Directory">Directory Operations</a> </h3>
+  <p ALIGN="JUSTIFY"><em>Mkdir</em>, or <em>md</em>, creates a directory.</p>
+  <p ALIGN="JUSTIFY"><em>Rmdir</em>, or <em>rd</em>, removes a directory.&nbsp; The
+  directory must already be empty.</p>
+  <h3><a name="Editing">Editing Files in TOS </a></h3>
+  <p ALIGN="JUSTIFY">You can use the edit command to invoke the TOS editor. This is a GUI
+  program, so it may only be used if you have access to a windowing environment, which rules
+  out running it from a telnet session. </p>
+  <p ALIGN="JUSTIFY">The author of TOS, curse him, intended the editor only for quick edits.
+  As a result, it has deliberately been left primitive, with not even basic facilities such
+  as cut, copy, and paste. You may type, change text, and save, nothing more. If you quit
+  the editor without saving, you will be prompted to save your file.</p>
+  <p ALIGN="JUSTIFY">Because text files in TOS are stored in Unicode format, you may use any
+  human language supported by Unicode, as long as your host&#146;s keyboard and video
+  display permit it. See the Unicode Web site (<a HREF="http://www.unicode.org/">http://www.unicode.org</a>)
+  for a complete list of Unicode-supported languages.</p>
+  <p ALIGN="JUSTIFY">Write permission is required to edit a file.</p>
+  <h2><a name="Compiling">Compiling and Running Java Programs for TOS</a></h2>
+  <h3><a name="Selecting">Selecting a Compiler </a></h3>
+  <p ALIGN="JUSTIFY">TOS does not contain a Java compiler; you will have to make use of one
+  from your host machine. Before doing this you must tell TOS where on your host your
+  compiler is located. Use the regcomp command for this. You may enter the command in any
+  form that would execute successfully from the same host directory from where you launched
+  TOS.</p>
+  <p ALIGN="JUSTIFY">For instance, if the Sun javac compiler is already is your PATH
+  variable, you could enter simply</p>
+  <i><p>regcomp javac</i> </p>
+  <p ALIGN="JUSTIFY">If you need to use the Microsoft jvc compiler from a directory not in
+  your path, you might enter something like</p>
+  <i><p>regcomp d:\DevStudio\VJ98\bin\jvc.exe</i> </p>
+  <p ALIGN="JUSTIFY">Note: TOS does not handle host filenames with space characters, as
+  Windows does. You may wish to make use of batch files to get around this.</p>
+  <h3><a name="source">Compiling Java Source Files </a></h3>
+  <p ALIGN="JUSTIFY">Once you have registered a host compiler, you may run it with the javac
+  command. Note that javac does not mean that the host compiler must have that name; as
+  explained in the preceding section, any Java compiler on the host may be used. </p>
+  <p ALIGN="JUSTIFY">The syntax is:</p>
+  <p><em>javac filename[.java] [parameters]</em></p>
+  <p ALIGN="JUSTIFY">The source file must have the extension .java, but this can be omitted
+  from the command.&nbsp; The remaining parameters will be passed to the host compiler.</p>
+  <p ALIGN="JUSTIFY">The compiler will execute in the directory on your host from which you
+  started the TOS console. You must ensure that the CLASSPATH variable on your host includes
+  the paths of any Java packages you are importing, including the TOS packages.</p>
+  <p ALIGN="JUSTIFY">See the Developer&#146;s Guide for information on writing Java
+  applications for TOS.</p>
+  <h3><a name="running">Running Java Programs </a></h3>
+  <p ALIGN="JUSTIFY">Use the Run command to run a Java class file. You may run the class
+  either in the foreground, so that its standard input and output map to the console, or in
+  the background, completely separate from the console.</p>
+  <p ALIGN="JUSTIFY">Note, however, that in either case TOS exports the file to the
+  directory on your host from which you ran the TOS console and runs the class from there,
+  using the executable on your host contained in your host&#146;s JAVA environment variable.
+  You must make sure that any classes referenced in your applications are contained in your
+  host&#146;s CLASSPATH environment variable.</p>
+  <p ALIGN="JUSTIFY">Although TOS will export the actual files you will be using, it does
+  not export any supporting classes you have written. These must be exported in advance to a
+  location in your host&#146;s CLASSPATH.</p>
+  <p ALIGN="JUSTIFY">You may not use package names. Java classes to be run from TOS must be
+  part of an anonymous package. Use of a package name will cause a run-time error from your
+  host Java interpreter.</p>
+  <h2><a name="importing">Importing and Exporting Files from TOS to Your Host</a></h2>
+  <h3><a name="text">Text and Binary Modes </a></h3>
+  <p ALIGN="JUSTIFY">TOS text files are stored using the Unicode convention, which uses two
+  bytes per character. TOS will, however, take care of translating between Unicode and the
+  default text encoding system of your host. On both UNIX and English-language versions of
+  Windows, this is ASCII.</p>
+  <p ALIGN="JUSTIFY">This does mean, however, that when importing or exporting a file you
+  must specify whether it is a binary or text file.</p>
+  <h3><a name="fileimport">Importing Files </a></h3>
+  <p ALIGN="JUSTIFY">To import a file, use the import command:</p>
+  <p><em>import host-source-name tos-destination-name mode [password]</em></p>
+  <p ALIGN="JUSTIFY">You must have write permission on the TOS file tos-destination, and be
+  able to read the host file host-source. Indicate either &quot;text&quot; or
+  &quot;binary&quot; as the mode parameter. There is no default, so if the mode is omitted
+  you will receive an error message.</p>
+  <p ALIGN="JUSTIFY">Host filenames are relative to the directory from which you ran the TOS
+  console.</p>
+  <h3><a name="fileexport">Exporting Files </a></h3>
+  <p ALIGN="JUSTIFY">To export a file, use the export command:</p>
+  <i><p>export tos-source host-destination mode [password]</i> </p>
+  <p ALIGN="JUSTIFY">You must have read permission on the TOS file tos-destination, and be
+  able to write to the host file host-destination. Indicate either &quot;text&quot; or
+  &quot;binary&quot; as a the mode parameter. There is no default, so if the mode is omitted
+  you will receive an error message.</p>
+  <p ALIGN="JUSTIFY">Host filenames are relative to the directory from which you ran the TOS
+  console.</p>
+  <h2><a name="script">TOS Script Files </a></h2>
+  <p ALIGN="JUSTIFY">TOS has the ability to place multiple commands in a single text file
+  and execute them as a group. A script file must have the extension .scr. </p>
+  <p ALIGN="JUSTIFY">To run a script file, type</p>
+  <i><p>exec script-filename[.scr] [password]</i> </p>
+  <p ALIGN="JUSTIFY">Actually typing the .scr extension is optional. You must have execute
+  permission on the script file in order to run it.</p>
+  <p ALIGN="JUSTIFY">Unlike MS-DOS batch files or UNIX shell scripts, you may only use
+  actual TOS commands in a script file. There are no operators or other statements
+  permitted.</p>
+  <h2><a name="exit">Exiting TOS </a></h2>
+  <p ALIGN="JUSTIFY">Exit TOS with the <em>exit</em> command. You do not need to disconnect
+  before doing this.</p>
+  <h2><a name="command">TOS Command Summary</a> </h2>
+  <p ALIGN="JUSTIFY">Those TOS commands that have counterparts in MS-DOS and the UNIX shells
+  usually may be executed using either name for convenience. Thus, <em>copy</em> and <em>cp</em>
+  have the same effect, as do <em>move</em> and <em>mv</em>, <em>dir</em> and <em>ls</em>
+  etc.</p>
+  <p ALIGN="JUSTIFY">Note, though, that only the UNIX / character may be used as a path
+  separator. The \ character (the MS-DOS path separator) is just another character in TOS.</p>
+  <p ALIGN="JUSTIFY">The TOS console is case-sensitive throughout.</p>
+  <p ALIGN="JUSTIFY">Parameters listed within brackets [] are optional.</p>
+  <h3>chmod</h3>
+  <p><i>chmod filename permissions password</i></p>
+  <p>Change permissions on a file. </p>
+  <p><i>filename</i> - Name of file<br>
+  <i>permissions</i>&#150; New permissions<br>
+  <i>password</i>&#150; Password. May not be blank. </p>
+  <p>&nbsp;</p>
+  <h3>connect</h3>
+  <p>connect host[:port]</p>
+  <p>Connect to a TOS launcher. </p>
+  <p><i>host</i>&#150; Name or IP address of a launcher to connect to.<br>
+  <i>port</i> &#150; TCP/IP port the launcher is running on at the host.&nbsp; Defaults to
+  1099.</p>
+  <p>&nbsp;</p>
+  <h3>copy </h3>
+  <p><i>copy source-file destination-file<br>
+  cp source-file destination-file</i></p>
+  <p>Copies a file.</p>
+  <p><i>source-file</i> &#150; File to be copied.<br>
+  <i>destination-file</i> &#150; New file </p>
+  <p>&nbsp;</p>
+  <h3>delete </h3>
+  <p><i>delete filename<br>
+  del filename<br>
+  rm filename</i></p>
+  <p>Deletes a file.</p>
+  <p><i>filename</i>&#150; Name of file to delete. Write permission is required. </p>
+  <p>&nbsp;</p>
+  <h3>dir</h3>
+  <p><em>dir<br>
+  ls</em></p>
+  <p>Lists the contents of the current directory.</p>
+  <p>&nbsp;</p>
+  <h3>disconnect </h3>
+  <p><i>disconnect</i></p>
+  <p>Disconnect from the current TOS launcher. </p>
+  <h3>edit </h3>
+  <p><i>edit filename password</i></p>
+  <p>Invokes the TOS editor and loads the file in question, or creates a new file if none
+  exists.<br>
+  <i>filename</i> &#150; File to edit. If it exists already, must have read and write
+  permission.<br>
+  <i>password</i>&#150; Password of file, if necessary.</p>
+  <p>&nbsp;</p>
+  <h3>exec </h3>
+  <i><p>exec script-file[.scr] [password] </i></p>
+  <p>Executes a script file. <i></p>
+  <p>script-file &#150;</i> Name of script file to execute. Execute permission required.<br>
+  <i>password &#150; </i>Password, if necessary. <i></p>
+  <p>&nbsp;</p>
+  <h3></i>exit <i></h3>
+  <p>exit </i></p>
+  <p>Exits TOS. </p>
+  <p>&nbsp;</p>
+  <h3>export </h3>
+  <i><p>export tos-source host-destination mode [password] </i></p>
+  <p>Export a TOS file to a file on the host.<i> </p>
+  <p>tos-source &#150; </i>TOS file to export. Read permission is required on this file.<br>
+  <i>host-destination &#150; </i>Name of new file on host. <i><br>
+  mode &#150; </i>Whether to treat the TOS file as a text or binary file.<br>
+  <i>password &#150;</i>Password of TOS file, if necessary <i></p>
+  <p>&nbsp;</p>
+  <h3></i>javac <i></h3>
+  <i><p>javac filename[.java] [parameters] </i></p>
+  <p></i>Invokes a host Java compiler. <i></p>
+  <p>filename[.java] &#150; </i>Name of Java source file on TOS. File extension is optional.<br>
+  <i>parameters &#150; </i>Parameters to be sent to the compiler.</p>
+  <p>&nbsp;</p>
+  <h3>import</h3>
+  <p><i>import host-source tos-destination mode [password]</i></p>
+  <p>Imports a host file into a TOS file. </p>
+  <p><em>host-source</em> &#150; Name of host file to import.<br>
+  <em>tos-destination</em> &#150; Name of new TOS file. Write permission is required on this
+  file if it already exists.<br>
+  <em>mode</em> - Whether to treat the TOS file as a text or binary file.<br>
+  <em>password</em> &#150; Password of TOS file, if necessary </p>
+  <p>&nbsp;</p>
+  <h3>move / mv </h3>
+  <p><em>move source-file destination-file mv source-file destination-file </em></p>
+  <p>Creates a copy of a file at another location and deletes the original file. </p>
+  <p><em>source-file</em> &#150; File to be copied and deleted.<br>
+  <em>destination-file</em> &#150; New file. </p>
+  <p>&nbsp;</p>
+  <h3>mkdir / md </h3>
+  <p><em>mkdir dirname<br>
+  md dirname </em></p>
+  <p>Creates a directory. </p>
+  <p><em>dirname</em> &#150; Name of new directory. </p>
+  <p>&nbsp;</p>
+  <h3>protect </h3>
+  <p><em>protect filename [oldpassword</em>] </p>
+  <p>Protects a file and sets a new password. </p>
+  <p><em>oldpassword</em> &#150; The former password, if there is one. </p>
+  <p>&nbsp;</p>
+  <h3>regcomp </h3>
+  <p><em>regcomp compiler</em> </p>
+  <p>Registers a host compiler. </p>
+  <p><em>compiler</em> &#150; Name of compiler on host to be invoked with the javac command.
+  </p>
+  <p>&nbsp;</p>
+  <h3>rmdir / rd </h3>
+  <p><em>rmdir dirname<br>
+  rd dirname</em> </p>
+  <p>Removes a directory. All files in the directory are also deleted without warning. </p>
+  <p><em>dirname</em> &#150; Name of directory to remove.</p>
+  <p>&nbsp;</p>
+  <h3>run </h3>
+  <p>run class[.class] [&amp;] </p>
+  <p>Runs a Java class file on the host. </p>
+  <p><em>class</em> &#150; Name of class to execute. Typing the extension .class is
+  optional. Package names are qualified with the / operator instead of a period. Execute
+  permission required.<br>
+  <em>&amp;</em> &#150; If absent, indicates foreground operation, so the running
+  class&#146; standard input and output are connected to the TOS console, which halts until
+  the class finishes. If present, class runs asynchronously in the background. </p>
+</blockquote>
+</body>
+</html>

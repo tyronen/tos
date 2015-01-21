@@ -1,0 +1,1010 @@
+<html>
+
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 3.0">
+<title>COSC 4F90 - Final Report</title>
+</head>
+
+<body TEXT="#000075" BACKGROUND="images/Background.jpg" topmargin="40" leftmargin="20">
+
+<p align="center">&nbsp; </p>
+<div align="center"><center>
+
+<table BORDER="7" CELLSPACING="3" CELLPADDING="0">
+  <tr>
+    <td ROWSPAN="2"><img SRC="images/Wizard.gif" ALT="Wizard.gif (17222 bytes)" BORDER="0"
+    HEIGHT="70" WIDTH="60"></td>
+    <td><h1 align="center">COSC 4F90 Project:<br>
+    A Microkernel-Based Educational Operating System in Java </h1>
+    </td>
+    <td ALIGN="CENTER" ROWSPAN="2"><img SRC="images/BrockLogo.gif" HEIGHT="75" WIDTH="67"></td>
+  </tr>
+</table>
+</center></div>
+
+<p align="center">&nbsp; <a HREF="http://www.cosc.brocku.ca/"><img SRC="homes.gif"
+ALT="Home" HSPACE="5" BORDER="0" HEIGHT="15" WIDTH="15"></a>COSC home page&nbsp;<a
+HREF="http://www.cosc.brocku.ca/Offerings/"><img SRC="ups.gif" ALT="Up" HSPACE="5"
+BORDER="0" HEIGHT="15" WIDTH="15"></a>Course Offerings&nbsp;<a
+HREF="http://www.cosc.brocku.ca/Search.html"><img SRC="searchs.gif" ALT="Search"
+HSPACE="5" BORDER="0" HEIGHT="15" WIDTH="15"></a>Search COSC pages </p>
+
+<h2 align="center"><img SRC="Separator.gif" ALT="Separator.gif (1602 bytes)" VSPACE="10"
+HEIGHT="8" WIDTH="100%"></h2>
+
+<h1 align="center"><i>Final Report</i></h1>
+
+<h3 align="center">Student: <i>Tyrone Nicholas<br>
+</i>Supervisor: <i>Prof. Jerzy A. Barchanski<br>
+</i>Term: <i>December, 1998</i></h3>
+
+<p align="center">&nbsp; </p>
+
+<h2 align="center">Abstract</h2>
+
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <p>This project consisted of constructing a distributed educational operating system in
+          the Java language.&nbsp; The goals of the system are described.&nbsp; An architecture
+          based on extendible, replaceable server components is outlined with comparison to existing
+          systems in use today.&nbsp; Limitations imposed by multi-platform compatibility are
+          discussed and reasons for the design paths followed are presented.&nbsp;&nbsp; The
+          structures of the file system, synchronization facilities, interprocess communication,
+          user interface, and system call interface are explained.</p>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<blockquote>
+  <b><a HREF="#description"><p>Description of the Project</a></b> </p>
+  <p><b><a HREF="#background">Background</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#education"><p>Educational Operating System</a> </p>
+      <p><a HREF="#distributed">Distributed Systems</a> </p>
+      <p><a HREF="#microkernel">Microkernel-Based Architecture</a> </p>
+      <p><a HREF="#value">The Value of the Java Language</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#goals"><p>Goals of TOS</a></b> </p>
+  <p><b><a HREF="#design">Design Constraints</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#portability"><p>Portability</a> </p>
+      <p><a HREF="#all-java">All-Java</a> </p>
+      <p><a HREF="#extendibility">Extendibility</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#other"><p>Other Operating Systems</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#nachos"><p>Nachos</a> </p>
+      <p><a HREF="#xinu">Xinu</a> </p>
+      <p><a HREF="#javaos">JavaOS</a> </p>
+      <p><a HREF="#javaspaces">JavaSpaces</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#advantages"><p>Advantages of TOS</a></b> </p>
+  <p><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </b><a HREF="#portability2">Portability</a> </p>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a HREF="#virtual">Virtual Disk</a> </p>
+  <p><b><a HREF="#runtime">The Java Run-Time Environment</a></b> </p>
+  <p><b><a HREF="#libraries">The Java RMI Libraries</a></b> </p>
+  <p><b><a HREF="#Basic">Basic Structure of TOS</a></b> </p>
+  <p><b><a HREF="#overall">Overall Considerations</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#incremental"><p>Incremental Extendibility</a> </p>
+      <p><a HREF="#universal">Universal Access Points</a> </p>
+      <p><a HREF="#client">TOS Services in Client-Side Code</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#launchers"><p>The Launchers as Microkernels</a></b> </p>
+  <p><b><a HREF="#interface">The User Interface</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#applet"><p>Administrator: why an application instead of an applet?</a> </p>
+      <p><a HREF="#console">Console: why not a GUI?</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#file"><p>The File System</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#disk"><p>Implementation of a Disk</a> </p>
+      <p><a HREF="#s5">Use of the UNIX System V model</a> </p>
+      <p><a HREF="#fileimpl">Implementation of Files</a> </p>
+      <p><a HREF="#dir">Implementation of Directories</a> </p>
+      <p><a HREF="#security">Implementation of File Security</a> </p>
+      <p><a HREF="#location">How Location Transparency is Maintained</a> </p>
+      <p><a HREF="#name">Implementation of File Names</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#server"><p>Server Structure: Basic Principles</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#consistency"><p>How Consistency is Maintained</a> </p>
+      <p><a HREF="#scalability">How Scalability is Maintained</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#interprocess"><p>Interprocess Communication in TOS</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#nt"><p>The Windows NT Model</a> </p>
+      <p><a HREF="#javapipe">Java Objects Implementing Pipes</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#synch"><p>Synchronization in TOS</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#javasync"><p>Java Synchronization Facilities</a> </p>
+      <p><a HREF="#winsync">The Windows Model</a> </p>
+      <p><a HREF="#javasync2">Java Objects Implementing Sync Objects</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#platform"><p>Platform Issues</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <a HREF="#mac"><p>Impact of the Macintosh</a> </p>
+      <p><a HREF="#unix">Impact of UNIX</a></p>
+    </blockquote>
+  </blockquote>
+  <b><a HREF="#conclusion"><p>Teaching Suggestions</a></b> </p>
+  <p><b><a HREF="#biblio">Bibliography</a></b> </p>
+  <blockquote>
+    <blockquote>
+      <p>&nbsp;</p>
+    </blockquote>
+  </blockquote>
+  <h2><a NAME="description"></a>Description of the Project</h2>
+  <p>This project had as its goal the implementation of a portable, extendible, educational
+  distributed operating system designed in the context of a microkernel-server paradigm and
+  implemented using the Java language. <br>
+  <a NAME="background"></a> </p>
+  <h2>Background</h2>
+  <h3>Educational Operating Systems</h3>
+  <p>Among the central components of any undergraduate computer science curriculum is
+  operating systems.&nbsp; No professional programmer, administrator, or analyst can do
+  their jobs effectively without a fundamental understanding of how operating systems are
+  designed and implemented. </p>
+  <p>There is no real substitute, in learning how software works, to actually dealing with
+  the source code.&nbsp; Commercial operating systems are manifestly unsuitable for this
+  purpose.&nbsp; The source code of most is a closely guarded trade secret; even when it is
+  not, the source code base is far too large for students to be able to grasp
+  quickly.&nbsp;&nbsp; There are usually optimizations liberally scattered in a commercial
+  system, optimizations that do improve performance considerably but detract from
+  readability. </p>
+  <p>For this reason, there are now in use many purely educational operating systems, with a
+  much simpler set of features and smaller code base, generally designed and implemented
+  entirely by academics.&nbsp; Some of these boot directly from the hardware, but the
+  majority either run over a native operating system or over a software simulation of the
+  hardware. <br>
+  <a NAME="distributed"></a> </p>
+  <h3>Distributed Systems</h3>
+  <p>The majority of educational systems today rely heavily on the UNIX approach to
+  operating system construction, which has dominated both the industry and academia for
+  nearly a quarter of a century.&nbsp; This author is not a critic of UNIX, but it must be
+  realized that new developments in computing today cannot be reflected in the traditional
+  framework. </p>
+  <p>The most important is the concept of <i>distributed systems.</i>&nbsp; In commercial
+  settings, applications are already routinely constructed that run over many different
+  computers of different architectures.&nbsp; Catching up to this is the distributed
+  operating system, one that runs on many computers simultaneously, and provides
+  applications with a single system image regardless of what location the application
+  happens to be situated in. </p>
+  <p>Distributed educational systems in use today, such as Amoeba and Mach, suffer some of
+  the same limitations as commercial systems; they are sufficiently large and complex that
+  their source code does not lend itself to thorough examination in a one-semester
+  undergraduate course.&nbsp; In addition, it is important that the impact of the
+  distributed paradigm not totally overshadow the fundamentals of operating system
+  concepts.&nbsp;&nbsp; The future likely holds a mixture of single-computer and
+  multi-computer operating systems, not the elimination of the former entirely. </p>
+  <p>For these reasons, there is a definite need for an educational operating system
+  sufficiently simple to cover the core topics of operating system design, and yet include
+  many of the key features of distributed systems. <br>
+  <a NAME="microkernel"></a> </p>
+  <h3>Microkernel-based Architecture</h3>
+  <p>The classical design of an operating system is that of MULTICS and its descendants - a
+  monolithic kernel built as a layered structure.&nbsp; The bottom layer deals directly with
+  the hardware and maps hardware calls to a set of primitives it offers the next
+  layer.&nbsp;&nbsp; Each layer offers an interface to the layer above it and deals with the
+  layer immediately beneath it.&nbsp; The top layer offers a system call interface that user
+  programs may use. </p>
+  <p>In a distributed environment, such an architecture loses a good deal of its
+  usefulness.&nbsp;&nbsp; Since the kernel is in essence a single monolithic unit, albeit a
+  layered one, it must be accessible to every machine in the system.&nbsp; There is no easy
+  way to achieve this.&nbsp; One way is to simply place a copy of the kernel on every
+  machine in the system.&nbsp; This leads to a potentially enormous amount of redundancy and
+  sacrifices most of the advantages of using a distributed operating system in the first
+  place, since the end result is essentially a networked set of machines each running their
+  own kernel. </p>
+  <p>The alternative would be to place the kernel on one machine to which every other
+  machine must make calls to in order to utilize system services.&nbsp; Such an approach is
+  inherently unscalable.&nbsp;&nbsp; Were the distributed system to grow very large, the
+  strain on the machine running the kernel would inevitably become unsustainable. </p>
+  <p>Instead of the monolithic kernel, then, a design scheme that has gained increasing
+  popularity in recent years is the <i>microkernel</i> approach.&nbsp; In this paradigm,
+  every machine hosts only a small section of the kernel.&nbsp; The rest of it is delegated
+  out to machines designated as servers.&nbsp; Each server offers only a subset of system
+  services.&nbsp; One machine acts as a file server, another as a device server, and so
+  on.&nbsp;&nbsp; There can be more than one server machine for each type of functionality. </p>
+  <p>This is a more scalable approach, since system expansion can be matched by increasing
+  the number of servers to match.&nbsp; It is also more modular and modifiable, since any
+  one server component can be replaced without having to rewrite other components, as long
+  as the defined interfaces between components remain the same. </p>
+  <p>Unfortunately, few educational operating systems, as yet, make use of this technique in
+  a way that is simple and small enough for students to easily observe.&nbsp; This is
+  unfortunate, as it can leave students with a mistaken impression that the traditional
+  monolithic approach is the only effective way to build operating systems. <br>
+  <a NAME="value"></a> </p>
+  <h3>The Value of the Java Language</h3>
+  <p>Being educational does not spare an operating system from some of the same pitfalls
+  that bedevil commercial systems.&nbsp; Perhaps the single biggest problem is
+  portability.&nbsp;&nbsp; Different academic settings use a widely variegated set of
+  hardware and native operating systems.&nbsp; An educational OS written for one platform
+  usually does not port easily to another without a good deal of effort.&nbsp; Instructors
+  often cannot use the product they would prefer in their courses because they do not have
+  access to the platform needed to run it. </p>
+  <p>Academics are not overly fond of industry buzzwords, but <i>Java</i> is one exception,
+  as the rapid adoption of this technology in recent years in university curricula
+  demonstrates.&nbsp; As a programming language, Java eliminates many of the criticisms that
+  can be made of the previous industry language standard, C++.&nbsp; Java boasts
+  language-level support for threads and runtime exceptions.&nbsp; It compiles to a
+  platform-independent bytecode that makes porting to other hardwares very nearly
+  trivial.&nbsp;&nbsp; It is fully object-oriented, not a hybrid like C++.&nbsp; Its use of
+  automatic garbage collection for out-of-scope objects and its deliberate lack of a pointer
+  mechanism make impossible some of the most frequent and expensive bugs in C++ programs. <br>
+  <a NAME="goals"></a> </p>
+  <h2>Goals of TOS</h2>
+  <p>The main goal of this project was to design and construct an educational operating
+  system that makes use of a microkernel-based structure.&nbsp; It runs in a distributed
+  environment without obscuring the core functions of an operating system.&nbsp; It is
+  implemented in the Java language to facilitate portability, and it supports user
+  applications also written in the Java language. </p>
+  <p>In choosing a name for the new operating system, the author has decided to throw
+  modesty to the dogs and use the name <i>Tyrone's Operating System, </i>or TOS. <br>
+  <a NAME="design"></a> </p>
+  <h2>Design Constraints</h2>
+  <h3>Portability</h3>
+  <p>TOS had to be portable to as many hardware platforms as possible.&nbsp; The immediate
+  goal for this project was to be able to run on the three platforms in common use at Brock
+  University, these being Microsoft Windows, Apple MacOS, and Silicon Graphics
+  IRIX.&nbsp;&nbsp; That meant that Java code had to be used as much as possible and native
+  modules to be avoided, even if that meant sacrificing performance.&nbsp; Assumptions about
+  the host operating system had to be kept to a minimum. <br>
+  <a NAME="all-java"></a> </p>
+  <h3>All-Java</h3>
+  <p>TOS was to be implemented entirely in Java.&nbsp; Native code, if it were to be used,
+  would almost certainly end up using platform-specific functions that would only confuse
+  students.&nbsp; This did impose some constraints on the system where the use of native
+  code would have simplified matters.&nbsp; In the commercial world applications written in
+  Java often are forced to rely on short sections of native code.&nbsp; Even the Java class
+  libraries themselves contain substantial amounts of native code.&nbsp; <br>
+  <a NAME="extendibility"></a> </p>
+  <h3>Extendibility</h3>
+  <p>This project will almost certainly not be the final word on TOS.&nbsp; There is no
+  reason the code base cannot be used for other senior-level computing projects.&nbsp; It
+  can conceivably be extended to the point where it is viable for use in commercial
+  distributed Java applications.&nbsp; For this to be possible, its design had to be
+  scalable to a large number of running hosts and users, and had to be written with a later
+  goal of commercial usage firmly in mind. <br>
+  <a NAME="other"></a> </p>
+  <h2>Other Operating Systems</h2>
+  <h3>Nachos</h3>
+  <p>Nachos was the model cited in the original proposal for this project.&nbsp; Developed
+  at Duke University in 1994, it was tied very firmly to the MIPS hardware it was originally
+  built upon.&nbsp; Nachos was built upon a simulator of the MIPS processor, complete with
+  interrupts, a clock, and paging system.&nbsp; The kernel, running to this machine,
+  provided thread switching, a simulated virtual disk and filesystem, and synchronization
+  and process handling services. </p>
+  <p>Nachos suffered a number of disadvantages.&nbsp; Its use of a MIPS simulator obscured
+  its teaching effectiveness for students unfamiliar with MIPS hardware.&nbsp; The kernel
+  also had no bootstrap mechanism of its own; the only way a user could start the system was
+  by cross-compiling an application to run over Nachos, which would then be linked
+  statically with the Nachos kernel.&nbsp; This placed limitations on how effectively
+  students could see the inner workings of the system.&nbsp; There were few utilities to
+  actually view and observer system contents or data tables. </p>
+  <p>Nachos did have some innovative features.&nbsp; One, imitated by TOS, was in simulating
+  a virtual disk drive rather than merely building a file system on top of a host file
+  system.&nbsp; In this way, students get to see the ins and outs of low-level I/O to disk
+  that cannot be as easily made clear by an approach like that of Xinu (see below). <br>
+  <a NAME="xinu"></a> </p>
+  <h3>Xinu</h3>
+  <p>Xinu (&quot;Xinu Is Not Unix&quot;) was developed jointly by Purdue University and
+  AT&amp;T Bell Laboratories.&nbsp; Originally developed to run over MS-DOS, it has proved
+  more amenable to porting than Nachos, and was used in its Apple Macintosh incarnation to
+  teach operating system implementation at Brock University.&nbsp; Xinu provided a nearly
+  complete range of system services, but in other respects relied largely on its native
+  system for support.&nbsp;&nbsp; Its file system, for instance, was merely a wrapper to the
+  underlying Macintosh file system.&nbsp; As with Nachos, users made use of a cross-compiler
+  to create programs; further, they even had to link it directly with the Xinu kernel in
+  order to run their applications!&nbsp; Thus the only effective way for the user to run
+  more than one process was for one process to explicitly create another. </p>
+  <p>The Xinu code base also contained liberal quantities of platform-dependent
+  code.&nbsp;&nbsp; Students at Brock University, including the author when he studied Xinu,
+  were forced to wade through dozens of references to Macintosh functions that were not
+  documented in the Xinu text.&nbsp; They had only the function's name from which to infer
+  its operation, and this only detrimented their understanding of Xinu operations. </p>
+  <p>Despite its name, Xinu did offer many similarities to UNIX, the system whose internals
+  students were most familiar with.&nbsp; It also offered a well-organized, comprehensive,
+  and neat system architecture. <br>
+  <a NAME="javaos"></a> </p>
+  <h3>JavaOS</h3>
+  <p>No discussion of a Java-implemented operating system is complete without JavaOS, Sun's
+  platform for Java intended for use on legacy computer systems, network computers (NCs) and
+  a wide variety of embedded devices and appliances.&nbsp; JavaOS provides all the
+  functionality of an operating system on which Java programs can be run. </p>
+  <p>It might be thought that TOS could be built using JavaOS as a reference
+  model.&nbsp;&nbsp; Such an assumption would be mistaken.&nbsp; JavaOS bears little
+  resemblance to TOS, either in its targets or its basic design philosophy.&nbsp; For
+  starters, it is not a distributed operating system at all, but a unicomputer operating
+  system intended merely to be portable even to small handheld devices or household
+  appliances. </p>
+  <p>Secondly, despite its name, JavaOS is not entirely written in Java.&nbsp; All operating
+  systems must, at some point or another, deal directly with the hardware, and that means a
+  layer of native code is essential.&nbsp; The core of JavaOS is thus written in
+  C.&nbsp;&nbsp; Use of C code violates one of the key design principles of TOS, that it be
+  implemented entirely in Java. <br>
+  <a NAME="javaspaces"></a> </p>
+  <h3>JavaSpaces</h3>
+  <p>JavaSpaces, not JavaOS, is the nearest thing Sun has to a distributed operating
+  system.&nbsp; Like TOS, JavaSpaces is based on the principle of providing a unified,
+  consistent set of services for distributed applications already running on top of a native
+  operating system with its own copy of the Java virtual machine.&nbsp; However, emulating
+  its design would not be advisable for an educational system. </p>
+  <p>Fundamentally, JavaSpaces offers just three operations, <i>write, lookup, </i>and <i>take</i>,
+  with which applications can pass information into and retrieve it from an object called a
+  space, which acts as an object-independent repository for data.&nbsp; Distributed
+  application developers may find this highly useful, but students learning how operating
+  systems work will not.&nbsp; JavaSpaces is, after all, not an operating system but a
+  framework in which distributed applications can be deployed.&nbsp; It is true that
+  frameworks dominate the marketplace today and all but exclude true distributed operating
+  systems, but that may change. <br>
+  <a NAME="advantages"></a> </p>
+  <h2>Advantages of TOS</h2>
+  <p><b>Portability:&nbsp; </b>TOS does have explicit installation files for Windows, UNIX,
+  and the Macintosh, but porting to other platforms will be almost trivial.&nbsp;&nbsp; The
+  only platform-dependent code is a small <i>if-elseif</i> structure to choose the look and
+  feel for GUI components, a single line of code in the console in which user applications
+  are run, and the native packaging used to start TOS executables, which is not actually
+  Java code at all.&nbsp; The <i>Design Specification</i> had anticipated needing a
+  platform-dependent layer to run applications, but in fact it was not necessary. </p>
+  <p><a NAME="virtual"></a><b>Virtual Disk: </b>TOS provides an excellent overview of some
+  of the most basic operating system concepts.&nbsp;&nbsp; One particularly noteworthy
+  feature is the virtual disk facility.&nbsp; Instead of creating files by simply wrapping
+  the host's native file system, TOS actually contains &quot;disks&quot; that are
+  implemented entirely in software and saved as only one native file.&nbsp; This again is a
+  concept borrowed from Windows, albeit in a much different concept; Microsoft's OLE
+  Structured Storage technology, in which objects created by many different applications and
+  with different structures are saved by a container application into a single compound
+  file. </p>
+  <p>Thus, students can see low-level interfacing with an I/O device and yet not sacrifice
+  all the benefits of hardware independence that Java provides.&nbsp; The only one who
+  suffers, of course, is the author of TOS, who has the added labour of designing and
+  implementing this virtual disk in addition to the rest of the file system.&nbsp; Since the
+  author's motto is <i>never let sleep stand in the way of science, </i>this did not prove
+  to be an obstacle. </p>
+  <h2><a NAME="runtime"></a>The Java Run-time Environment</h2>
+  <p>As was discussed above, the widespread acclaim that Java is receiving in both academia
+  and industry is well justified.&nbsp; The language cannot truly be said to incorporate the
+  very latest advances in programming language theory, but nonetheless it manages the rare
+  feat of providing a base for robust, stable programs while giving&nbsp; programmers many
+  casual similarities to their beloved C++. </p>
+  <p>The use of Java as both the system language and application language naturally has a
+  considerable impact on the layering of the system.&nbsp; Certain facilities that
+  traditionally are part of an operating system have been omitted from TOS completely
+  without compromising the system's quality.&nbsp; These are: </p>
+  <p>1) <b>Scheduling.&nbsp; </b>Threads are a part of the Java language and their
+  scheduling and context switching is the responsibility of the Java Virtual
+  Machine.&nbsp;&nbsp; Providing a separate threading mechanism for TOS would have been
+  reinventing the wheel.&nbsp; Instead, TOS has extended the Java threading mechanism to
+  allow communication between and coordination of threads located in different virtual
+  machines on different computers. </p>
+  <p>2) <b>Memory management.&nbsp; </b>Java programs do not have to worry about
+  memory.&nbsp; The Java Virtual Machine provides applications with all the memory they
+  need.&nbsp; The VM handles the nuances of obtaining more memory from the underlying host
+  operating system.&nbsp; Java programmers do not even need to concern themselves with
+  returning memory they no longer need to the system, because of the VM's automatic garbage
+  collection mechanism which automatically deallocate objects with no references to
+  them.&nbsp;&nbsp; Any concept of a global, TOS-wide stack or heap would be both redundant
+  and unnecessary, and has therefore been safely omitted. </p>
+  <h2><a NAME="libraries"></a>The Java RMI Libraries</h2>
+  <p>Version 1.1 of the Java Development Kit (JDK) introduced the Remote Method Invocation
+  system.&nbsp; This is the component that makes TOS possible.&nbsp; RMI makes possible the
+  seamless invocation of a method of a remote object as if it were local.&nbsp;&nbsp; Every
+  one of the server processes in TOS is such an exported remote object whose functions are
+  thus easily accessible to any client process. </p>
+  <p>The JDK comes with a simple tool, <i>rmiregistry, </i>which can be run from the command
+  line or invoked via the static library function <i>Registry.createRegistry().&nbsp;&nbsp; </i>This
+  tool sets up a network port on which to listen for remote calls.&nbsp;&nbsp; Any client
+  can look up objects exported to that port using the <i>Naming.lookup()</i>&nbsp;&nbsp;
+  function, which takes a URL as an argument. </p>
+  <p>When clients make use of a lookup function, the RMI libraries return a remote stub
+  object, which to the client <i>is </i>a remote object.&nbsp; The client is then free to
+  make remote calls freely, without having to concern itself at all with the distinction
+  between local and remote. </p>
+  <p>Remote stubs are serializable objects.&nbsp; This means they can be passed as
+  parameters to other functions or even to other processes.&nbsp; TOS makes considerable use
+  of this; it is, in fact, the main method different servers use to keep track of system
+  objects.&nbsp; Any pipe server can thus deal with any pipe; any synchronization server can
+  deal with any synchronization object.&nbsp; The magic of RMI remote stubs makes it all
+  possible. </p>
+  <h2><a NAME="Basic"></a><b>Basic Structure of TOS</b></h2>
+  <p>TOS may run on any number of machines, as long as they are connected on a single
+  physical network, intranet, or the Internet.&nbsp; To start TOS on a machine, a user must
+  run the <i>launcher</i> program.&nbsp; The first launcher to run will also start up a
+  filename server, pipe server, and sync server.&nbsp; Other launchers to join the system
+  must connect to an already-running launcher. </p>
+  <p>Most of the functionality of TOS is provided in servers.&nbsp; The pipe server deals
+  with the interprocess communication, which is provided via objects called <i>pipes, </i>logical
+  information transfer mechanisms running on a full-duplex basis.&nbsp; The sync servers
+  manage the three types of synchronization objects TOS provides; semaphores, mutexes, and
+  signals.&nbsp; File name servers have the responsibility of mapping filenames from the
+  global namespace to their physical locations. </p>
+  <p>The TOS file system uses virtual disks, software-based simulations of real disks that
+  are stored as a single physical file on the underlying host.&nbsp; Individual TOS files
+  can be created and manipulated at will regardless of what virtual disk they are located
+  on. </p>
+  <p>To administer the system, the user must run the GUI <i>Administrator</i>
+  program.&nbsp;&nbsp; This can be run from anywhere on the network, not necessarily a
+  machine running a launcher.&nbsp; Once it connects to one of the launchers, it can display
+  information about the hosts in the TOS system, the running processes, servers, and disks,
+  and individual pipe and synchronization objects.&nbsp; New servers and disks can be
+  created or removed from the system; deadlocks can be broken by killing processes or
+  directly manipulating pipes or synchronization objects. </p>
+  <p>TOS also has a <i>Console</i> program, providing a command-line shell through which
+  users can navigate the file system and create and destroy files.&nbsp; They may also edit,
+  compile, and run Java programs directly. </p>
+  <p>User applications that make use of TOS are derived from an abstract class created for
+  this purpose, called <i>TOSProcess, </i>that provides access to system services without
+  permitting subclass developers to see the details of the implementation. </p>
+  <h2><a NAME="overall"></a>Overall Considerations</h2>
+  <h3><a NAME="incremental"></a>Incremental Extendibility</h3>
+  <p>A new launcher, server, or disk can be added at any time and removed at any time
+  without affecting the functioning of the rest of the system.&nbsp; User programs need not
+  have to worry about the physical location of disks, servers, and launchers.&nbsp; The
+  single launcher they connected to will provide them access to the entire system. </p>
+  <h3><a NAME="universal"></a>Universal Access Points</h3>
+  <p>An application program, upon starting up, has only to connect with one launcher.&nbsp;
+  That launcher will provide the application, either directly or indirectly, with all the
+  references to servers and disks that it needs, regardless of their locations.&nbsp; The
+  nuances of dealings with servers and disks are in hidden sections of the user application,
+  leaving the programmer with largely hassle-free use of TOS system services. </p>
+  <p>The same principle is applied within the TOS architecture itself.&nbsp; Launchers do
+  not have to search for and make direct contact with individual servers; each one maintains
+  a reference to a single server of each type and uses that reference to access the entire
+  subsystem.&nbsp; The only exception to this principle are disks, which have to be
+  persistent and therefore deal directly with their launcher. </p>
+  <h3><a NAME="client"></a>TOS Services in Client-Side Code</h3>
+  <p>This author makes no apologies for the influence of Windows-based ideas on TOS, given
+  his own career as a professional Windows developer/analyst.&nbsp; Windows has some of its
+  operating-system functions running in the processor's kernel mode, and other functions
+  located in user mode as dynamic libraries that at run time are actually loaded into a
+  process' address space. </p>
+  <p>An analogous design exists in TOS.&nbsp; Every TOS application must be descended from
+  the class <i>TOSProcess, </i>which has private data structures and functions that
+  implement a considerable part of TOS functionality.&nbsp; The entire file access layer of
+  the file system resides in client-side code.&nbsp; The TOS disks only export functions to
+  read and write individual data blocks; the business of reading from and writing to files,
+  traversing directories, and checking passwords is all found in client-side code.&nbsp; A
+  similar situation exists in the synchronization system, where the client process itself
+  contains the code to suspend and resume threads based on instructions from the server. </p>
+  <p>In fact, every TOS process is actually an RMI server and exports a remote interface
+  that is an important part of TOS functionality.&nbsp; This server is private and thus
+  inaccessible to programmers, yet they enjoy all the benefits it provides. </p>
+  <p>The <i>TOSProcess</i> class even hides the special thread that the RMI runtime
+  libraries create to receive requests and automatically terminates it when all non-daemon
+  threads created by the client terminate, giving the user the impression they are operating
+  like any non-remote Java application. </p>
+  <h2><a NAME="launchers"></a>The Launchers as Microkernels</h2>
+  <p>In designing any microkernel-based operating system, a decision has to be made as to
+  where to draw the line between the responsibilities of the microkernel and those of the
+  modular servers.&nbsp; The less functionality a microkernel has, the greater the
+  flexibility the operating system as a whole enjoys, as server components can be more
+  easily replaced or rewritten than microkernels. </p>
+  <p>On the other hand, functionalities implemented in the microkernel will be more easily
+  available and accessible to other system components, because of the microkernel's presence
+  on every machine running the system.&nbsp; In situations where network communication times
+  are significant, larger microkernels may result in a significant performance improvement. </p>
+  <p>The TOS microkernels are known as <i>launchers.&nbsp; </i>They have three basic
+  functionalities: </p>
+  <h4>1) Starting and stopping servers</h4>
+  <p>Most computers do not permit a program running on another machine to remotely start a
+  process.&nbsp; To get around this, a launcher&nbsp; must be started directly by a user on
+  every host that will be running TOS server components.&nbsp; Once the launcher is in
+  place, it can make use of the Java<i> Runtime.exec() </i>function to launch other
+  servers.&nbsp; Similarly, launchers can be employed to force the shutdown of any running
+  server. </p>
+  <h4>2) Providing access points</h4>
+  <p>End users never see the servers, only the launchers.&nbsp; The launcher signifies the
+  presence of TOS on a host and is the single point to which user-written applications
+  connect to deal with the operating system.&nbsp; Remote references to other servers are
+  not obtained directly but are provided by the launchers. </p>
+  <h4>3) Maintaining system tables</h4>
+  <p>Launchers maintain lists of every server running on the system, for the purpose of
+  being able to provide this information to the user (via the Administrator) and to be able
+  to add and remove servers easily.&nbsp; Arguably, this is redundant, since the servers
+  themselves of necessity also maintain lists of other servers of their class, but it is
+  also more robust.&nbsp; The risk of inconsistency is there, to be true, but TOS carries
+  out updates to the tables in the launchers simultaneously with those in the servers, so it
+  is not a worrisome factor. </p>
+  <h2><a NAME="interface"></a>The User Interface</h2>
+  <p>Complete details of the Console and Administrator can be found in the <i><a
+  HREF="userguide.html">User's Guide</a></i> and <i><a HREF="Administrator.html">Administrator's
+  Guide</a>, </i>respectively, and shall not be repeated here.&nbsp; Some design
+  considerations are worthy of examination, and these are looked at below. </p>
+  <h3><a NAME="applet"></a>Administrator: why an application instead of an applet?</h3>
+  <p>It might be argued that the Administrator utility should have been made a Java applet
+  instead of an application, allowing users to make use of the familiar web browser to
+  access it.&nbsp; This, however, suffered several disadvantages.&nbsp; The most important
+  is the security restrictions browsers apply to their applets.&nbsp; An applet cannot
+  connect to any TCP/IP server other than the one it was loaded from.&nbsp; This would rule
+  out more than half the features of the Administrator, which rely on direct contact with
+  TOS server components which can be located anywhere on the network.&nbsp; Secondly, it
+  would require running launchers and servers on hosts that are also running an HTTP server,
+  an unnecessary restriction when all that TOS needs to run are RMI servers. </p>
+  <h3><a NAME="console"></a>Console: why not a GUI?</h3>
+  <p>Another criticism that can be made is the choice of a command-line console to navigate
+  the file system.&nbsp; Why use a command line for users and a GUI application for
+  administrators?&nbsp; The simplest answer is students studying Java code could see both in
+  action.&nbsp; There is also the consideration that many students will be using telnet
+  sessions into a UNIX host to run TOS, an environment that does not allow GUI programs to
+  be displayed.&nbsp; The flip side is that, despite Apple's promises to the contrary, there
+  is no way of writing interactive command-line Java programs for the Macintosh without
+  writing native code using the JManager libraries to receive input from the user.&nbsp; The
+  generic JBindery tool provided with the MRJ SDK does not cut it. </p>
+  <h3><a NAME="swing"></a>Use of the JFC/Swing libraries</h3>
+  <p>TOS' GUI services are provided by the Java Foundation Classes (JFC) library, also known
+  as Swing.&nbsp; These offer a number of advantages: </p>
+  <p>1) Although not a part of Java 1.1, they will be made a part of the core Java API in
+  Java 1.2.&nbsp; This enhances the extendibility of the code. </p>
+  <p>2) The JFC libraries allow the developer to quickly customize the look and feel of the
+  application with a single line of code.&nbsp; This enables TOS to display Windows-style
+  icons, fonts, and shapes while running on Windows, Motif-style objects running under
+  Motif, and Macintosh-style appearances under the Macintosh (although admittedly, the JFC
+  implementation of the Macintosh look and feel leaves much to be desired). </p>
+  <p>3) Unlike the AWT libraries, which are based on calls to a set of <i>peer</i> classes
+  which in turn are written largely in native code, the JFC classes are constructed almost
+  entirely in Java.&nbsp; This makes them more lightweight and takes up a lesser load of
+  system resources. </p>
+  <h2><a NAME="file"></a>The File System</h2>
+  <h3><a NAME="disk"></a>Implementation of a Disk</h3>
+  <p>Taken from Nachos is the idea that, unlike Xinu and most other educational systems, TOS
+  does not simulate merely the file system but the disk hardware itself.&nbsp; This adds
+  greatly to the development effort to build the system, but, as was mentioned previously,
+  the author's favourite motto is <i>never let sleep stand in the way of science.</i> </p>
+  <p>The author's own professional background in Microsoft Windows programming led to the
+  use of Object Linking and Embedding (OLE) structured storage as a model for the TOS
+  disk.&nbsp;&nbsp; Windows applications that are OLE containers can create documents which
+  contain objects produced by any number of different OLE server applications.&nbsp; These
+  can be saved into a single compound file.&nbsp; The operating system sees this as a single
+  file, but the OLE container treats it as, in effect, a directory containing several files.
+  </p>
+  <p>Thus, a compound file created by a container like Adobe PageMaker can contains,
+  internally, different virtual files, one for Microsoft Word text, another for a Microsoft
+  Excel graph, another for a CorelDraw image, and so on. </p>
+  <p>The TOS disk runs along similar lines.&nbsp; The host operating system sees it as a
+  single binary file, but TOS has neatly organized every byte in it so that it resembles a
+  physical disk. </p>
+  <h3><a NAME="s5"></a>Use of the UNIX System V model</h3>
+  <p>There are dozens of different file systems in use in many different operating
+  systems.&nbsp;&nbsp; For an educational system, however, it is best to create something
+  that students can easily relate to.&nbsp; The majority of undergraduates possess a
+  familiarity with only two file systems, those used in UNIX and those in MS-DOS and its
+  descendants. </p>
+  <p>Disks running on Intel machines have a master boot record and a partition
+  table.&nbsp;&nbsp; The latter divides the disk into one or more logical disks, the former
+  identifies which of these logical disks is used to boot the computer.&nbsp; A partition
+  using the MS-DOS file system will then contain a File Allocation Table (FAT) which
+  contains an array-implemented linked list of disk blocks for every file in the operating
+  system. </p>
+  <p>The problem with this is that if anything happens to the FAT, which is only a small
+  section of the disk, the entire disk can become unusable, as countless MS-DOS users have
+  discovered to their considerable grief.&nbsp; Placing so much information about the
+  filesystem in a single location is not a good example of robust design. </p>
+  <p>UNIX, by contrast, places only global information about the file system in the
+  introductory block, called the <i>superblock.</i>&nbsp; Every file then has a structure
+  called an <i>inode</i>, which contains basic information about the file and a linked list
+  of data blocks containing that file's data. </p>
+  <p>TOS models itself on <i>s5fs, </i>the original System V file system designed in the
+  late 1970s.&nbsp; Few commerical UNIX implementations still make use of this system, which
+  lacks the dozens of optimizations and enhancements that have been introduced since
+  then.&nbsp;&nbsp; Nonetheless, it has, as is typical, the advantage that the commercial
+  systems do not have - simplicity of implementation. </p>
+  <p>TOS does introduce a distinction that <i>s5fs </i>does not have - a genuine difference
+  between in-memory objects and on-disk objects.&nbsp; When <i>s5fs </i>opens a file, for
+  instance, the corresponding inode is loaded into memory and added to the kernel's
+  in-memory inode list.&nbsp; The in-memory version is structurally identical to the on-disk
+  version.&nbsp; Not so in TOS - the format of data structures routinely differs.&nbsp; TOS
+  saves to physical disk only what is absolutely necessary to be saved. </p>
+  <p>In addition, given that network problems and crashes are likely to be more of an issue
+  with TOS than with <i>s5fs, </i>robustness and consistency are greater
+  considerations.&nbsp;&nbsp; Caching, which improves performance at the expense of
+  robustness and consistency, has therefore been kept to a minimum.&nbsp; Only the writing
+  of data blocks is cached; writes to the superblock, free list, or inodes are not cached
+  but are written to physical disk at once. </p>
+  <p>The internal structure of a TOS disk consists of the following sections: </p>
+  <h4>Superblock</h4>
+  <p>The on-disk superblock contains just three essential pieces of information about the
+  disk - the maximum number of open files, the number of data blocks, and the size of each
+  data block.&nbsp; When the disk starts to run, the on-disk superblock is loaded and used
+  to create the in-memory superblock, which calculates other pieces of information, most
+  importantly the locations in the host file of the beginning of each section. </p>
+  <h4>Free list</h4>
+  <p>Any block in a disk is either allocated to a file or free.&nbsp; If it is free, it is
+  kept on the free list.&nbsp; Since the total number of data blocks is of a known fixed
+  size set at disk creation, the free list can be stored on disk as an array, with the index
+  serving as an identifier of the block.&nbsp; Each block can thus be marked as used or
+  free. </p>
+  <p>In memory, however, a different scheme is used, since it is important to be able to
+  allocate and free data blocks with maximum speed.&nbsp; When the disk starts running, the
+  byte array on disk is converted into a Java <i>stack</i> object.&nbsp; Blocks can then be
+  allocated and freed merely by simple <i>push</i> and <i>pop </i>operations. </p>
+  <p>For maximum robustness, however, every single allocation and deallocation of a virtual
+  disk block results in an update to the free list on the physical disk immediately. </p>
+  <h4>Inodes</h4>
+  <p>Because the maximum number of files the virtual disk can store is fixed at disk
+  creation time, the on-disk inode list is of a fixed size.&nbsp; The inode holds basic
+  information about each file (its name, password, permissions etc.) and pointers to its
+  first index block and data block. </p>
+  <p>One key difference from UNIX is the lack of an in-memory inode list in the
+  kernel.&nbsp;&nbsp; As is explained below, inodes are loaded into memory when a TOS file
+  is opened, but they are loaded into the <i>application's</i> address space, not the
+  disk's.&nbsp; The disk itself does not keep track of which files are open and which are
+  closed.&nbsp; Nor does it need to; since there is no caching the on-disk version of each
+  TOS file is always up to date. </p>
+  <h4>Data blocks</h4>
+  <p>At disk creation time, administrators specify the size of each data block and the
+  number of data blocks the disk will contain.&nbsp; Administrators must manually ensure
+  that the host machine has sufficient space to store the disk.&nbsp; As is the case in
+  Nachos, the physical disk file does not grow as data as added to it; it is created on the
+  host already at its maximum size, filled with zeros.&nbsp; This avoids the risk of growing
+  disk files running out of space on their host. </p>
+  <p>As is the case with any file system, the size of the data block involves a tradeoff
+  between space use and speed.&nbsp; Large data blocks can lead to inefficient use of space,
+  if there are many files smaller than the block size, or if the last data block of each
+  file routinely has a small proportion of its bytes filled.&nbsp; On the other hand, small
+  data blocks can lead to excessive fragmentation, as many of them must be allocated for
+  larger files and these are often non-contiguous.&nbsp; At first, this might seem a problem
+  for TOS, one that would necessitate the development of a disk defragmentation utility. </p>
+  <p>However, since this is a virtual disk, not a physical disk, the latency and seek times
+  make themselves felt at a much lower layer - the host operating system's access to the
+  physical file.&nbsp; This is outside the purview of the Java Virtual Machine and cannot be
+  dealt with without writing platform-dependent native code.&nbsp; Given both the all-Java
+  design objective and the fact that in actuality most TOS instances run by students will
+  have a comparatively small number of files and data, the issue is not significant. </p>
+  <h4>Indexing</h4>
+  <p>The TOS indexing system is kept much simpler than that of <i>s5fs</i>.&nbsp; There is
+  no concept of indirect indexing as in <i>s5fs, </i>where one index entry can be a pointer
+  to an entire table of indexes.&nbsp; TOS files use a single index, which can be spread out
+  over as many data blocks as necessary.&nbsp; The inode holds the location of the first
+  index block; during reading or writing the data blocks to use can simply be obtained by
+  traversing the index block.&nbsp; Each index block has as its last item the location of
+  the next.&nbsp; There is no limit to the size of the index itself, except, of course, the
+  fact that no one file can use more data blocks than the disk has available to
+  allocate.&nbsp; This will place a limit on the number of index blocks any one file could
+  ever need. </p>
+  <p>There is, admittedly, a potential scalability problem with such a design, but it would
+  occur only if a very large disk were created with a very small block size, which is
+  inadvisable even for commercial systems.&nbsp;&nbsp; (Windows, for one, automatically sets
+  the block size based on the size of the disk being formatted and does not allow users to
+  change it, for this very reason.) </p>
+  <h3><a NAME="fileimpl"></a>Implementation of Files</h3>
+  <p>The most striking difference between TOS and <i>s5fs</i> lies in the location of the
+  code that actually navigates the files themselves.&nbsp; In <i>s5fs, </i>a
+  non-object-oriented system, applications make use of system calls which are implemented
+  inside the kernel.&nbsp;&nbsp; Not so in TOS.&nbsp; The Java class that deals with most of
+  the nuances of individual files is <i>TOSFile, </i>which is executed inside the
+  application process, albeit with its operations and fields hidden from the application
+  programmer using Java access modifiers. </p>
+  <p>The great advantage of this approach is that it leaves the disk with all that much less
+  to do.&nbsp; Most of the calls the disk receives will be to retrieve and write data blocks
+  as a whole.&nbsp; The details of determining which blocks to read and write, to say
+  nothing of interpreting the data contained therein, all lies within the
+  application.&nbsp;&nbsp; This is a very scalable approach, since increasing the number of
+  open files will not increase the amount of processing the virtual disk has to do.&nbsp;
+  Nor would increasing the number of applications accessing the disk. </p>
+  <p>What might be questioned is the security of this method - the possibility that much of
+  the functionality of the operating system could in effect be modified on the fly, perhaps
+  malevolently, by an application program.&nbsp; This is not as great a risk as it
+  seems.&nbsp;&nbsp; Most of the code within the <i>TOSFile</i> class is protected, so the
+  programmer only sees an opaque TOS file object, not the internal operations it is carrying
+  out. </p>
+  <p>A full technical explanation of this class is found in the <i><a
+  HREF="tosdocs/index.html">Developer's Guide</a>.&nbsp; </i>Briefly, a file is opened first
+  by searching for it along the directory tree, then loading its inode into memory,
+  performing security checks if necessary.&nbsp; The first index block and first data block
+  are loaded into memory if the file has been opened for reading or writing; if opened for
+  appending, the last index and data blocks are opened. </p>
+  <p>The file is handled on a sequential basis; there is no <i>seek()</i> operation as in
+  random-access files.&nbsp; Once the user has come to the end of a data block, it is send
+  to the virtual disk to be written to the physical file.&nbsp; The number of the next data
+  block is obtained from the in-memory index block and obtained from the virtual
+  disk.&nbsp;&nbsp; A similar procedure is followed when coming to the end of an index
+  block. </p>
+  <p>When a file is closed after having been open for writing, the numbers of the last index
+  block, last data block, and last position within the last data block are written in the
+  inode.&nbsp; The reason for this is that there is no EOF character that can be guaranteed
+  not to be used for any other symbol under any character set.&nbsp; Using the Unicode EOF
+  character (0x07) won't do if the native character set is single-byte, becuase of the zero
+  in the upper byte.&nbsp; EOF characters are therefore dispensed with. </p>
+  <p>It is entirely up to the application what data is to be entered into the
+  file.&nbsp;&nbsp; There are <i>readChar() </i>and <i>writeChar() </i>methods that will
+  write Unicode characters as two separate bytes, but applications are not necessarily
+  required to make use of this.&nbsp; As far as the file is concerned, there is no
+  difference between text and binary files, although the TOS console does make such a
+  distinction (see the <i>User Interface</i> section of this document). </p>
+  <h3><a NAME="dir"></a>Implementation of Directories</h3>
+  <p>As in UNIX, a directory is simply a file.&nbsp; The contents of a directory are merely
+  the names of each file and their respective inode number separated by the /
+  character.&nbsp;&nbsp; New directory entries are simply appended to the end of the
+  file.&nbsp; If existing entries are removed, the entire file is rewritten so as not to
+  have waste space in the middle of the directory file. </p>
+  <p>Directories have the added advantage of shortening considerably the time needed to
+  located a file on the virtual disk.&nbsp; When given a file, the first directory in its
+  absolute path name is searched for within the root directory of the virtual
+  disk.&nbsp;&nbsp; Linear searches are thus only necessary within directories, and not for
+  the disk as a whole as would be necessary otherwise. </p>
+  <h3><a NAME="security"></a>Implementation of File Security</h3>
+  <p>The classical UNIX security system assigns ownership of every file to a user, who then
+  has the authority to issue differing permissions to each file.&nbsp; This, of course,
+  assumes that the system has a user table and complete subsystem for managing users. </p>
+  <p>It can be questioned why TOS does not have a similar feature.&nbsp; Users do not log
+  into TOS and enter a password, as they must in UNIX and even Windows NT; they simply get
+  in with no authorization measures at all, as in the much-maligned MS-DOS. </p>
+  <p>The reason for this is the transient nature of TOS.&nbsp; Because of its use largely by
+  students, no one instance of TOS is likely to be running for more than a short
+  time.&nbsp;&nbsp; Many instances will only have a single user; few indeed will have more
+  than a very small number of users.&nbsp; It was deemed too great an inconvenience to have
+  to set up user accounts and passwords every single time TOS is launched in order to use
+  even the most basic features of the file system. </p>
+  <p>The way out is to use passwords for each file.&nbsp; Any user can assign a password to
+  a file using the console's <i>protect</i> command.&nbsp; Once protected, permission bits
+  can be set on a file using a syntax similar to that of UNIX using the <i>chmod</i>
+  command, but with one digit (world) instead of UNIX's three, since TOS does not have users
+  and groups as UNIX does. </p>
+  <p>Passwords do have the drawback of having to be entered with every command that accesses
+  a protected file.&nbsp; Commands like <i>move</i> and <i>copy</i>, which deal with more
+  than one file, have to use prompts to allow users to enter file passwords without
+  confusion.&nbsp; Nonetheless, the simplicity offered by a password-based approach was
+  considered by the author to have more merit than demerit over the login-based apporach. </p>
+  <h3><a NAME="location"></a>How Location Transparency is maintained</h3>
+  <p>The original design of TOS called for a naming system along the lines of MS-DOS and its
+  descendants, where the physical location of files would be known to the user.&nbsp; After
+  some reflection during the development process, it was felt that this was
+  insufficient.&nbsp;&nbsp; Accordingly, a more UNIX-like look was adopted.&nbsp; As under
+  UNIX and NFS, system administrators can now mount disks to directory names as part of a
+  single global namespace.&nbsp; Hidden layers of the client application know where the
+  physical disk actually is, but since this information is stored in <tt>private</tt> data
+  structures, it is inaccessible to the programmer. </p>
+  <h3><a NAME="name"></a>Implementation of File Names</h3>
+  <p>The TOS console and user applications deal in path names in a global namespace that is
+  not shared internally by any of the TOS virtual disks.&nbsp; It is the filename server's
+  responsibility to map names from the global namespace into the namespace of the virtual
+  disk the file in question is located on. </p>
+  <p>Names are chosen in the TOS Administrator program, which permits the mounting and
+  unmounting of virtual disks to and from the global namespace. </p>
+  <h2><a NAME="server"></a>Server Structure: Basic Principles</h2>
+  <p>Although the launcher and virtual disk can be thought of as servers, for the purpose of
+  this section the word <i>server</i> should be taken to mean the pipe server, filename
+  server, and sync server.&nbsp; These three are run from Java classes that inherit from the
+  <i>Server</i> abstract class. </p>
+  <h3><a NAME="consistency"></a>How consistency is maintained</h3>
+  <p>Although different objects are handled by different servers, every server knows which
+  other server handles every object of its class in the system.&nbsp; Thus, for instance, if
+  a pipe server receives a request for a pipe that it does not store in its own tables, it
+  can refer the request to the correct pipe server.&nbsp; The group of pipe servers,
+  collectively, then, form a &quot;black box&quot; from the viewpoint of the rest of the
+  system.&nbsp; Contact with one server enables contact with any other. </p>
+  <h3><a NAME="scalability"></a>How scalability is maintained</h3>
+  <p>The black-box approach means that the addition of more objects to the system is not an
+  issue, as long as enough servers are added to handle it.&nbsp; The only caveat is that,
+  eventually, the number of servers could grow large enough that mapping objects to their
+  implementing server could become an overly time-consuming operation.&nbsp; It would not be
+  difficult, however, to modify the server structure to allow some type of classification of
+  objects to avoid this problem. </p>
+  <h2><a NAME="interprocess"></a>Interprocess Communication in TOS</h2>
+  <h3><a NAME="nt"></a>The Windows NT Model</h3>
+  <p>Educational operating systems have a disappointing tendency to use IPC mechanisms
+  considerably less useful than what is appropriate for the modern age.&nbsp; The
+  message-passing mechanism used in Xinu suffers the disadvantage that every message is
+  discrete and cannot be read smoothly. </p>
+  <p>A model that suggested itself fairly soon to the author was the named-pipe mechanism of
+  Windows NT.&nbsp; NT processes can create a pipe, and other processes can connect to that
+  pipe by name.&nbsp; The creating process can then send data down the pipe and have it
+  received at the other end.&nbsp; Each process maintains a handle to the pipe, which can be
+  passed as a parameter to other functions, threads, or even other processes. </p>
+  <p>TOS goes even further than this.&nbsp; NT's pipes are half-duplex, but TOS pipes are
+  full-duplex.&nbsp; In that respect, a TOS pipe can be considered the equivalent of a pair
+  of NT-style pipes, since data sent in one direction does not collide, or have any other
+  effect on, data sent in the other direction. </p>
+  <p>The only disadvantage is that TOS pipes can be accessed by only two processes, one at
+  each end, making them unsuitable for broadcast use.&nbsp; A workaround for this is if the
+  processes that wish to receive broadcasts place the connection to the receiving end of a
+  pipe inside a mutex-guarded critical section, so that each receiver connects to the same
+  pipe one after another.&nbsp; This does mean that the sender must resend the data for each
+  recipient, but the job will be done.&nbsp; Broadcasting was not, however, a major design
+  consideration for TOS pipes (nor was it for NT, which uses <i>unnamed</i> pipes for that
+  purpose); a different subsystem can be added to TOS in a future implementation. </p>
+  <h3><a NAME="javapipe"></a>Java Objects Implementing Pipes</h3>
+  <p>Pipes are represented on the client side by the <i>Pipe</i> class and on the server
+  side by the <i>InternalPipe</i> class.&nbsp; The client-side class does little but wrap
+  calls to the pipe server and keep track of which side of the pipe the calling process is
+  on.&nbsp; The server-side class maintains copies of the data that have been written to the
+  pipe until they are read from. </p>
+  <p>See the <i><a HREF="tosdocs/index.html">Developer's Guide</a></i> on these classes for
+  more details as to the operation of pipes. </p>
+  <h2><a NAME="synch"></a>Synchronization in TOS</h2>
+  <h3><a NAME="javasync"></a>Java Synchronization Facilities</h3>
+  <p>Synchronization in most operating systems is based on data structures called <i>monitors
+  - </i>once a lock is placed on a monitor object of some kind, no other process can access
+  that object until the locker has released it.&nbsp; Sections of code can be guarded
+  against use by more than one thread by having an object locked at the critical section's
+  beginning and released at its end.&nbsp; This can be encapsulated in data structures
+  called mutexes or semaphores. </p>
+  <p>Java, notably, features such a facility at the language level using the <i>synchronized</i>
+  type modifier.&nbsp; A section of code, or even an entire function, can be guarded by the
+  use of a lock on any local or class instance variable.&nbsp; This, in fact, is far more
+  convenient than having to use the platform-dependent system calls for synchronizatino
+  required by languages like C++.&nbsp; However, the <i>synchronized </i>modifier is only
+  effective among threads running in a single Java virtual machine, diminishing its
+  usefulness in distributed applications. </p>
+  <h3><a NAME="winsync"></a>The Windows Model</h3>
+  <p>The Windows family provides three types of synchronization objects in its API; <ul>
+    <li>the <i>semaphore, </i>which allows a fixed number of threads into a critical section and
+      blocks any threads beyond that number;</li>
+    <li>the <i>mutex, </i>which operates essentially as a semaphore with its fixed number of
+      threads always 1;</li>
+    <li>the <i>event, </i>which if in its signaled state will allow any thread to pass through,
+      but if set to its nonsignaled state will block every thread.&nbsp; Threads can in effect
+      be told when to proceed by another thread setting a nonsignaled event to signaled.</li>
+  </ul>
+  <p>These provide the programmer with a good deal of flexibility.&nbsp; The event object,
+  in particular, allows synchronization to be used for timing and coordination of different
+  threads, not just guarding access to resources or critical sections. </p>
+  <p>TOS provides these same three types of objects, changing the name of <i>event</i> to <i>signal</i>
+  to avoid confusion with the <tt>java.awt.Event</tt> class. </p>
+  <h3><a NAME="javasync2"></a>Java Objects Implementing Sync Objects</h3>
+  <p>On the client side, there is an abstract superclass <i>SyncObject, </i>with subclasses <i>Semaphore,
+  Mutex, </i>and<i> Signal. </i>The client's listener thread contains the code needed to
+  suspend and resume threads when needed by a synchronization object. </p>
+  <p>All three object types are dealt with on the server side through the single class <i>SyncRecord,
+  </i>which has a field marking the object's type. </p>
+  <p>For&nbsp; more information see the<a HREF="tosdocs/index.html"> <i>Developer's Guide.</i></a>
+  </p>
+  <h2><a NAME="platform"></a>Platform issues</h2>
+  <p>TOS was designed and built on the computer in the author's home, which runs Microsoft
+  Windows NT 4.0.&nbsp; The compiler used was beta 2 of Microsoft Visual J++
+  6.0.&nbsp;&nbsp; It is true that Visual J++ has come under considerable criticism from the
+  Java developer community for its non-standard extensions to the Java language itself and
+  its failure to support RMI or the Java Native Interface (JNI).&nbsp; Nonetheless, it was
+  judged the easiest and fastest development environment available.&nbsp; The author
+  disabled Microsoft language extensions and substituted Sun's implementation of the JDK
+  class library for Microsoft's during the build process, so as to maintain PureJava
+  compatibility.&nbsp; All of TOS is 100% PureJava. </p>
+  <h3><a NAME="mac"></a>Impact of the Macintosh</h3>
+  <p>The author relucantly admits, despite being an ardent advocate of the Apple Macintosh
+  during his own undergraduate years, the process of developing TOS did not endear that
+  system to him. </p>
+  <p>The TOS console was designed as a non-GUI application.&nbsp; This can be done without
+  much difficulty on most operating systems, but not the Macintosh, to whom all applications
+  are GUI-based.&nbsp; Any console application to run on the Macintosh must therefore have
+  some sort of GUI wrapper for the console. </p>
+  <p>This consideration has come up before for Brock University in its usage of the
+  Macintosh.&nbsp; Until recently, Modula-2 on the Macintosh was used to teach introductory
+  computer programming; console input and output was handled by Modula-2 libraries which
+  made use of a special &quot;TextWindow&quot; in which console I/O could be made. </p>
+  <p>Apple does, in fact, provide a similar wrapper for Java applications.&nbsp; The
+  Macintosh Runtime for Java Software Development Kit (MRJ SDK) contains <i>MRJToolkit, </i>a
+  simple set of libraries with which Java programs can deal with basic operations of the
+  Macintosh shell; <i>JManager, </i>a library through which Java programs have access to the
+  entire Java API, and finally <i>JBindery, </i>a simple tool that wraps Java classes into a
+  package that can be started easily from the Macintosh Finder (shell).&nbsp; It was
+  JBindery that the author used to prepare the Macintosh version of TOS. </p>
+  <p>Two problems soon emerged with this: </p>
+  <p>1) Apple's promises to the contrary, the present version of JBindery does not support
+  redirecting standard input to a Java console window.&nbsp; That means the TOS console is
+  in effect inoperable on the Macintosh, since the user is left with no way to type in
+  commands.&nbsp; The only way around this would be to implement an equivalent of JBindery
+  using the JManager library, but, since this in effect means writing large quantities of
+  native code, this was not done.&nbsp; As a result, the TOS console is not currently
+  supported on the Macintosh. </p>
+  <p>2) The Macintosh lacks a command line for its applications.&nbsp; On UNIX and Windows,
+  parameters can be passed to any application merely by entering space-delimited argument
+  lists on the command line.&nbsp; The only equivalent on the Macintosh is dragging a
+  document over the application's icon in the Finder, which sends an Apple <i>Open</i> event
+  to the application as it starts.&nbsp; To use this mechanism in TOS would, once again,
+  involve the writing of native code. </p>
+  <p>The author decided instead to dispense with command-line parameters.&nbsp; Instead,
+  every server process in TOS must load and read an initialization file containing any data
+  needed for startup.&nbsp; This violates the very spirit in which the Java interpreter is
+  intended to be used, but was the only effective solution that maintained both platform
+  independence and Macintosh operation. </p>
+  <h3><a NAME="unix"></a>Impact of UNIX</h3>
+  <p>A Java application written on Windows will run on UNIX with virtually no modification,
+  and TOS is no exception.&nbsp; The only caveat lies in the way UNIX hosts are
+  used.&nbsp;&nbsp; While Windows machines are nearly always accessed directly from the
+  system console, which has full support for the Windows GUI, UNIX machines are often
+  accessed through telnet sessions, under which GUI services are unavailable. </p>
+  <p>The TOS Administrator is a full-fledged GUI application and thus is simply not
+  supported from a UNIX telnet session; the user must have access to a windowed
+  environment.&nbsp;&nbsp; The rest of TOS, however, uses GUI services only to display error
+  messages. </p>
+  <p>The most effective way to display an error for a process running in the background is
+  to display a message on the user's screen, which immediately brings it to their
+  attention.&nbsp;&nbsp; On Windows and the Macintosh, this approach continues to be
+  used.&nbsp; When running on a UNIX machine, however, a TOS server checks to see if a
+  windowed display is available when it starts up.&nbsp; If it is, error messages will be
+  displayed in GUI format.&nbsp; If not, they will be written to a command line. </p>
+  <h2><a NAME="conclusion"></a>Teaching Suggestions</h2>
+  <p>There is virtually no limit to the enhancements and add-ons that an operating system
+  can have.&nbsp; A list of some possible assignments that could be given in an
+  undergraduate course follows. <ul>
+    <li>Develop a TOS equivalent of the UNIX <i>talk</i> program, using TOS pipes.</li>
+    <li>Using TOS signal objects, write a program that will perform a sequence of actions on
+      several machines in succession, each machine not starting the sequence until the exact
+      moment the previous one has completed.</li>
+    <li>Develop a GUI file manager utility to replace the command-line TOS console.</li>
+    <li>Add standard clipboard functions (cut, copy, paste) to the TOS editor.</li>
+    <li>Add a &quot;merging&quot; feature to TOS, so that two TOS systems can combine, with no
+      loss of disks, sync objects, or pipes.</li>
+    <li>Write a program that will display a message on a screen of one computer - but each line
+      must originate from a different computer.&nbsp; The lines must form a readable message.</li>
+    <li>Modify the launcher so that if the user does not supply a TCP/IP port number and the
+      default is already in use, the launcher will search for a free port and use it.</li>
+    <li>Add support for random-access files.</li>
+  </ul>
+  <h2><a NAME="biblio"></a>Bibliography</h2>
+  <table CELLSPACING="3" CELLPADDING="12" valign="top">
+    <tr>
+      <td VALIGN="TOP">Anderson, Thomas.</td>
+      <td VALIGN="TOP">&quot;Nachos&quot;&nbsp; <br>
+      &nbsp;<a HREF="http://www.cs.berkeley.edu/~tea/nachos">http://www.cs.berkeley.edu/~tea/nachos</a>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Comer, Douglas&nbsp; <br>
+      and Munson, Steven.</td>
+      <td><i>Operating System Design Vol. 1: The Xinu Approach, Macintosh Edition.</i>&nbsp; <br>
+      Englewood Cliffs: Prentice Hall, 1989.</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Downing, Troy Bryan.</td>
+      <td><i>Java RMI: Remote Method Invocation.</i>&nbsp; <br>
+      New York: IDG Books, 1998.</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Microsoft Corporation.</td>
+      <td><i>Microsoft Developer Network Library, July 1998 Edition.</i> <br>
+      Redmond: Microsoft, 1998.</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Sinha, Pradeep K.</td>
+      <td><i>Distributed Operating Systems, Concepts and Design.</i>&nbsp; <br>
+      Piscataway: IEEE Press, 1997.</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Sun Microsystems Inc.</td>
+      <td>&quot;Java Platform Documentation&quot;&nbsp; <br>
+      &nbsp;<a HREF="http://java.sun.com/docs/index.html">http://java.sun.com/docs/index.html</a>&nbsp;</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Tanenbaum, Andrew S.</td>
+      <td><i>Modern Operating Systems.</i>&nbsp; <br>
+      Englewood Cliffs: Prentice Hall, 1992.</td>
+    </tr>
+    <tr>
+      <td VALIGN="TOP">Vahalla, Uresh.</td>
+      <td><i>UNIX Internals: The New Frontiers.</i>&nbsp; <br>
+      Upper Saddle River: Prentice Hall, 1996.</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+</blockquote>
+</body>
+</html>

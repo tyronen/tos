@@ -1,0 +1,482 @@
+<html>
+
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 3.0">
+<title>Administrator's Guide</title>
+<meta NAME="Template" CONTENT="D:\MSOffice\Templates\New Report.dot">
+</head>
+
+<body background="images/Background.jpg" text="#000075" topmargin="40" leftmargin="20">
+<div align="center"><center>
+
+<table BORDER="7" cellpadding="0" CELLSPACING="3">
+  <tr>
+    <td VALIGN="center" ROWSPAN="2"><img SRC="images/Wizard.gif" WIDTH="60" HEIGHT="70"
+    border="0" ALT="Wizard.gif (17222 bytes)"></td>
+    <td VALIGN="center"><h1 ALIGN="center">COSC 4F90 Project:<br>
+    A Microkernel-Based Educational Operating System in Java</h1>
+    </td>
+    <td VALIGN="center" rowspan="2"><img SRC="images/BrockLogo.gif" WIDTH="67" HEIGHT="75"></td>
+  </tr>
+</table>
+</center></div>
+
+<p ALIGN="center"><img SRC="images/Separator.gif" WIDTH="100%" HEIGHT="8"
+ALT="Separator.gif (1602 bytes)"></p>
+
+<h1 ALIGN="center"><em>Administrator's Guide</em></h1>
+
+<h3 ALIGN="center">Student: <i>Tyrone Nicholas</i><br>
+Supervisor: <em>Prof. Jerzy A. Barchanski</em><br>
+<em><b>Term</b></em> : <em>Dec. 1998</h3>
+</em>
+
+<p ALIGN="justify">&nbsp;</p>
+
+<blockquote>
+  <p ALIGN="justify"><a HREF="#_Toc432863191"><b>Introduction to TOS</b></a> </p>
+  <p ALIGN="justify"><a HREF="#_Toc432863192"><b>Installing TOS</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863193">Windows</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863194">UNIX</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863195">Macintosh</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863196"><b>General Server Characteristics</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863197">Initialization Files</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863198">Logging</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863199">Uniqueness</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863200"><b>The TOS Administrator</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863201">Starting the Administrator</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863202">Navigating the Administrator</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863203"><b>Managing Launchers</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863204">Purpose of Launchers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863205">Launcher Initialization File</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863206">Starting a Launcher</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863207">Viewing a Launcher</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863208">Removing a Launcher</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863209"><b>Managing the File System</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863210">The TOS File System</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863211">File Name Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863212">Disks</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863213">Creating Disks</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863214">Disk Persistence</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863215">Starting, Stopping, and Removing Disks</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863216">Mounting Disks</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863217"><b>Managing Servers</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863218">Types of Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863219">File Name Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863220">Pipe Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863221">Sync Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863222">Default Servers</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863223">Adding and Removing Servers</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p ALIGN="justify"><a HREF="#_Toc432863224"><b>Managing Processes and Objects</b></a></p>
+  <dir>
+    <dir>
+      <dir>
+        <dir>
+          <p ALIGN="justify"><a HREF="#_Toc432863225">Process Management</a></p>
+          <p ALIGN="justify"><a HREF="#_Toc432863226">Deadlock Management</a></p>
+        </dir>
+      </dir>
+    </dir>
+  </dir>
+  <p>&nbsp;&nbsp;</p>
+  <b><h2></b><a NAME="_Toc432863191">Introduction to TOS</a></h2>
+  <p ALIGN="justify">Tyrone's Operating System, or TOS, is a distributed operating system
+  intended for use in upper-year undergraduate courses in operating system implementation.
+  Built using the Java language, it has the capability of running on any of the many
+  operating system platforms that have Java implementations. Actual installations have been
+  prepared for UNIX, 32-bit Windows, and Macintosh platforms.</p>
+  <p ALIGN="justify">&nbsp;</p>
+  <h2><a NAME="_Toc432863192">Installing TOS</a> </h2>
+  <h3><a NAME="_Toc432863193">Windows</a></h3>
+  <p ALIGN="justify">Before installing TOS, you must have version 1.1.4 or later of the Java
+  Development Kit from Sun, or another vendor compatible with Sun, installed on your
+  machine. Microsoft's Virtual Machine for Java is not sufficient, as it does not contain
+  the Remote Method Invocation classes TOS needs for its operation. You will also require
+  version 1.0.2 or later of the Swing class libraries (also known as the Java Foundation
+  Classes).</p>
+  <p ALIGN="justify">The JDK distribution contains a file called classes.zip; the Swing
+  distribution has a file called swingall.jar. Both of these must be included in your
+  CLASSPATH environment variable. Under Windows 95 and 98, edit the autoexec.bat file to add
+  this to your classpath. Under Windows NT, use the Environment tab in the System applet in
+  the Control Panel to do this.</p>
+  <p ALIGN="justify">Note that TOS will not function under Windows 3.1, which does not have
+  sufficient support for Java threads to make TOS operation effective.</p>
+  <p ALIGN="justify">The TOS installation is contained within a zip-compressed file called
+  tos.zip. Unzip this using a utility like WinZip or PkUnzip; it will create a directory
+  TOSApp. It will contain one Windows executable, Administrator.exe, six batch files:
+  Console.bat, Launcher.bat, Disk.bat, FileNameServer.bat, PipeServer.bat, and
+  SyncServer.bat; and one subdirectory, tos, containing the TOS class files. TOSApp must be
+  added to your CLASSPATH and PATH variables.</p>
+  <p ALIGN="justify">All of these programs make use of an environment variable called JAVA.
+  This can be set to the name of the command-line Java interpreter of your choice. For the
+  Sun JDK, this is java.exe. Do not use the windowed interpreter (javaw.exe).</p>
+  <p ALIGN="justify">You may use the Microsoft interpreter (jview.exe), but if so you must
+  point it explicitly towards the Sun JDK classes by adding the Sun JDK classpath to the
+  registry key HKEY_LOCAL_MACHINE\Software\Microsoft\ Classpath\Classes.</p>
+  <h3><a NAME="_Toc432863194">UNIX</a></h3>
+  <p ALIGN="justify">Your system administrator should have installed for you version 1.1.4
+  or later of the Sun JDK's port to your implementation of UNIX and version 1.0.2 of the
+  Swing class libraries.</p>
+  <p ALIGN="justify">Use the following commands to decompress and install the TOS
+  installation file tos.tar.gz:</p>
+  <p>gunzip TOSApp.tar.gz</p>
+  <p>tar -xf TOSApp.tar</p>
+  <p ALIGN="justify">This will create a directory TOSApp containing seven Bourne shell
+  scripts, Administrator, Console, Disk, Launcher, PipeServer, and SyncServer. There is also
+  a subdirectory, tos, which contains the Java class files.</p>
+  <p ALIGN="justify">You should also edit your login intialization file (usually with a name
+  such as .login or .profile) so that your PATH, CLASSPATH, and JAVA environment variables
+  are properly set (see the Windows section above for details).</p>
+  <h3><a name="_Toc432863195"></a>Macintosh</h3>
+  <p ALIGN="justify">You will need version 2.0 or later of the Macintosh Runtime for Java,
+  (MRJ), which can be found at the site <a HREF="http://www.apple.com/java">http://www.apple.com/java</a>.
+  This is shipped with System 8.0 or later, but System 7 users will need to download it
+  (System 7.6 or later only). It installs to a folder called &quot;Macintosh Runtime for
+  Java&quot; inside the Extensions folder of your System Folder. </p>
+  <p ALIGN="justify">The Macintosh must use a more recent version of the Swing libraries
+  than Windows or UNIX. Install Swing version 1.1, Early Access 2 or later, and place the
+  file swingall.jar in the Classes folder of the MRJ folder in the previous paragraph. You
+  will need to also install the JFC/Swing Look and Feel for Macintosh, Early Access 2 or
+  later, and place the mac.jar file into your Classes folder.</p>
+  <p ALIGN="justify">The TOS installation files are contained in the StuffIt archive
+  tosapp.sit. Use StuffIt Expander to expand them into a directory called TOSApp. This
+  directory contains seven double-clickable Macintosh programs: Administrator, Console,
+  Disk, FileNameServer, Launcher, PipeServer, and SyncServer. These executables were created
+  from the Java .class files contained in the tos subdirectory with the JBindery tool
+  included in Apple's Software Development Kit for MRJ, which you will need if you wish to
+  change these execs.</p>
+  <p ALIGN="justify">The Macintosh does not have environment variables to set for you;
+  JBindery will automatically invoke Apple's Java VM. (Since at the time of writing, Apple's
+  is the only JDK 1.1-compliant Java VM for the Macintosh, interpreter-independence is not a
+  concern).</p>
+  <p ALIGN="justify">&nbsp;</p>
+  <h2><a NAME="_Toc432863196">General Server Characteristics</a></h2>
+  <h3><a NAME="_Toc432863197">Initialization Files</a></h3>
+  <p ALIGN="justify">None of the TOS servers accept command-line arguments, usually the
+  simplest way of passing initialization information to a program. Since the Macintosh has
+  no provision for command-lines (see Tyrone's Operating System: An Educational Operating
+  System in Java for details) TOS does not use command-lines.</p>
+  <p ALIGN="justify">Instead, every TOS component, when it starts, looks for a file in its
+  startup directory titled &lt;name of server&gt;.dat. A launcher , for instance, will read
+  information from launcher.dat. After it has finished its initialization, it will delete
+  the file. Disks use a slightly different naming convention for their initialization file,
+  as explained in the section Managing Disks.</p>
+  <h3><a NAME="_Toc432863198">Logging</a></h3>
+  <p ALIGN="justify">Servers do not write to standard output directly. On UNIX and
+  Macintosh, all TOS servers run invisibly in the background so do not have a visible
+  standard output. Output is therefore redirected to a text file called &lt;name of
+  server&gt;.log.</p>
+  <p ALIGN="justify">On Windows, each server runs in a command-line box, but standard output
+  is still redirected to a file for consistency. The presence of the box, however, allows
+  Windows 95 users to be able to shut down TOS servers individually in the event something
+  goes wrong, since Windows 95, unlike Windows NT's Task Manager, does not provide direct
+  access by users to background processes.</p>
+  <h3><a NAME="_Toc432863199">Uniqueness</a></h3>
+  <p ALIGN="justify">No more than one server of any single type can be running on any
+  host:port combination, with the exception of disks.</p>
+  <a NAME="_Toc432863200"><h3>The TOS Administrator</a></h3>
+  <p ALIGN="justify">The TOS Administrator is a GUI utility that enables you to view the
+  system state of all parts of the TOS system and to perform selected maintence and cleanup
+  operations. Any running Administrator may connect to any of the running Launchers.</p>
+  <h3><a NAME="_Toc432863201">Starting the Administrator</a></h3>
+  <p ALIGN="justify">Once at least one launcher is running (see next section), you may start
+  the TOS Administrator by launching the Administrator script, or application (depending on
+  your host system). The Administrator does not have any initialization information and
+  therefore requires no initialization file.</p>
+  <p ALIGN="justify">Note: to run the Administrator on UNIX, you must start it from a
+  terminal running inside an X-Windows environment. The Administrator cannot run in a
+  non-windows environment, such as a telnet session into a UNIX host.</p>
+  <p ALIGN="justify">The Administrator will automatically configure itself to display the
+  look and feel of the platform you are running under from the system property
+  &quot;os.name&quot;. If this does not work, it will default to the Motif look and feel.</p>
+  <p ALIGN="justify">When the Administrator first starts, only one menu, the Connection
+  menu, is enabled. Use the Connect item to connect to a launcher. You will be given a
+  dialog prompt asking for the name of a launcher to connect to. You must enter the
+  launcher's host name, followed by a colon (:) then the port number. If you omit the port
+  number, it will default to 1099.</p>
+  <p ALIGN="justify">The Administrator will then attempt to connect to the launcher. If
+  successful, the screen will display a list of active hosts. If not, you will see an error
+  message.</p>
+  <h3><a NAME="_Toc432863202">Navigating the TOS Administrator</a></h3>
+  <p ALIGN="justify">Once launched, the Administrator has three menus.</p>
+  <p ALIGN="justify">View contains different options for viewing different parts of the TOS
+  system state.</p>
+  <p ALIGN="justify">Disk provides commands to manage disk servers.</p>
+  <p ALIGN="justify">Command provides the remaining functionality of the Administrator.</p>
+  <a NAME="_Toc432863203"><h2>Managing Launchers</a></h2>
+  <h3><a NAME="_Toc432863204">Purpose of Launchers</a></h3>
+  <p ALIGN="justify">Launchers form the core functionality of TOS. It is they that initiate
+  the launching of servers and provide TOS client applications with handles to other TOS
+  servers.</p>
+  <p ALIGN="justify">The reason for their existence is that one CPU generally does not have
+  the right to start a process on another. Thus, the Administrator, although it contains a
+  command to remove a launcher, has no provision to start one.</p>
+  <h3><a NAME="_Toc432863205">Launcher Initialization File</a></h3>
+  <p ALIGN="justify">Before creating a launcher, you may have to create a plain text file
+  called Launcher.dat containing either or both of the following pieces of information,
+  delimited by a space character:</p>
+  <p ALIGN="justify">1)<strong> The TCP/IP port the launcher will listen on.</strong> If
+  omitted, it will default to 1099. No two launchers running on the same host (even from
+  different user accounts on UNIX) may run launchers on the same port, or on a port already
+  in use by another TCP/IP application.</p>
+  <p ALIGN="justify">2) <strong>The host and port of an existing launcher</strong> that the
+  new launcher will connect to. If omitted, the new launcher will create a new instance of
+  TOS. It therefore must be omitted in the first launcher to be created.</p>
+  <h3><a NAME="_Toc432863206">Starting a Launcher</a></h3>
+  <p ALIGN="justify">Once you have created the Launcher.dat file, run the Launcher batch
+  file, script, or application, depending on your host type. The first launcher to run will
+  spawn as child processes a filename server, a pipe server, and a sync server. Additional
+  launchers do not do this.</p>
+  <p ALIGN="justify">Each launcher will also look for a file called tos.rec, which will have
+  been saved there by any previous launcher that ran from the same directory on the host.
+  This file contains information on every disk that has run in that location. If one or more
+  disks were running from that spot the last time the launcher was terminated, it will start
+  them again.</p>
+  <h3><a NAME="_Toc432863207">Viewing Launchers</a></h3>
+  <p ALIGN="justify">Selecting the Launchers option from the View menu will display the host
+  and port of every running launcher in the system.</p>
+  <h3><a NAME="_Toc432863208">Removing a Launcher</a></h3>
+  <p ALIGN="justify">Use the Remove Server option from the Command menu of the Administrator
+  to remove a launcher from TOS. Choose Launcher from the Type combo box, select the host
+  and port from which you wish to remove a launcher, and press Remove.</p>
+  <p ALIGN="justify">Any other servers running on the same host:port combination will also
+  be removed. Pipes held by a pipe server and sync objects held by a sync server will be
+  destroyed. Disks will be stopped but not before their contents are saved (see Managing the
+  File System). Consoles connected to that launcher will no longer be able to function until
+  they reconnect to another launcher.</p>
+  <p ALIGN="justify">Removing a launcher may conceivably wreak havoc on running TOS
+  applications and should not be done unless absolutely necessary.</p>
+  <p ALIGN="justify">Note that if the Administrator terminates the launcher to which it is
+  connected, it must disconnect and reconnect to a different launcher.</p>
+  <a NAME="_Toc432863209"><h2>Managing the File System</a></h2>
+  <h3><a NAME="_Toc432863210">The TOS File System</a></h3>
+  <p ALIGN="justify">The TOS file system is a distributed file system that provides location
+  transparency. Users do not have to know on what host a file is located in order to use it.
+  From the user perspective, all files are located on a single virtual disk.</p>
+  <p ALIGN="justify">TOS, unlike some other educational operating system, does not make use
+  of the host file system. Files are implemented on individual disk servers which can be
+  created on any host running a launcher. Once created, disks can be temporarily stopped and
+  restarted, or removed permanently from the system.</p>
+  <p ALIGN="justify">For users to be able to make use of a file, it must be placed into the
+  namespace by mounting it. Naming services are provided by one of the TOS servers, the
+  filename server.</p>
+  <h3><a NAME="_Toc432863211">File Name Servers</a></h3>
+  <p ALIGN="justify">There are always one or more filename servers running in a TOS system.
+  Each provides a global view of the system state; it does not matter to which
+  administrators or users are connected to in order to obtain any naming information.</p>
+  <p ALIGN="justify">Filename servers are created, viewed, and destroyed in the same way as
+  other servers. See Managing Servers, below.</p>
+  <h3><a NAME="_Toc432863212">Disks</a></h3>
+  <p ALIGN="justify">Unlike other servers of the TOS system, a single machine may have more
+  than one disk server. Each disk server maintains its data in a single physical file on the
+  host system. The launcher on that host keeps track of the disks.</p>
+  <p ALIGN="justify">Disks are based on a simplified version of the UNIX System V (s5fs)
+  file system architecture. Every file has an on-disk inode which contains pointers to a
+  list of data blocks in the file. If the list of data blocks grows large, indirect indexing
+  is used to keep track of them. </p>
+  <h3><a NAME="_Toc432863213">Creating Disks</a></h3>
+  <p ALIGN="justify">Use the Create Disk option from the Disk menu to create a disk. You
+  must specify five parameters:</p>
+  <p ALIGN="justify">1) <strong>The name of the disk</strong>. This will be used for
+  references to the disk by the Administrator and server processes. It will also correspond
+  to the name of the disk's physical file on its host. No two disks within the TOS system
+  may have the same name.</p>
+  <p ALIGN="justify">2) <strong>The host:port combination the disk will run on</strong>.
+  There must be a TOS launcher running at that port, which will carry out the actual work of
+  running the disk.</p>
+  <p ALIGN="justify">3) <strong>The maximum number of files on the disk.</strong> The inode
+  list is implemented as an array, and its size is specified here. Users will not be able to
+  create further files in the directory tree mapped to by this disk once it is full.</p>
+  <p ALIGN="justify">4) <strong>The size of each data block in bytes</strong>. This will
+  affect system performance. Use of a too large block size will lead to excessive space
+  wastage as small files are unable to fill up a block. Use of too small a size may lead to
+  excessive fragmentation and greater latency times. Given that disk latency does not
+  involve the same time spans as a genuine physical disk, you are advised to lean towards
+  smaller sizes. 128 bytes is recommended for short-lived TOS instances; 512 bytes may be
+  better for longer-lasting runs.</p>
+  <p ALIGN="justify">5) <strong>The number of data blocks</strong>. The greater this number,
+  the greater the capacity of the disk. The host's available disk space should be borne in
+  mind when fixing this size.</p>
+  <p ALIGN="justify">None of these options are changeable once the disk has been started,
+  but they may be viewed at any time by selecting the Disks option from the View menu.</p>
+  <p ALIGN="justify">After you have clicked the Create button, the Administrator will signal
+  the launcher to create the disk in question, which once it starts will register itself
+  with the launcher. Once it does so, its status in the &quot;Is running&quot; column will
+  change from &quot;No&quot; to &quot;Yes&quot;.</p>
+  <p ALIGN="justify">You must mount the disk separately. See Mounting Disks, below.</p>
+  <h3><a NAME="_Toc432863214">Disk Persistence</a></h3>
+  <p ALIGN="justify">The name of the disk's physical file is simply &lt;disk name&gt;.dat.
+  It is placed in the host directory from which the launcher runs. </p>
+  <p ALIGN="justify">If the launcher terminates its operation, any disks it created or
+  started will be stopped. Any launcher starting looks for a saved list of disks and starts
+  them if it finds any.</p>
+  <p ALIGN="justify">For a technical discussion of disk operation, see Tyrone's Operating
+  System: An Educational Operating System in Java.</p>
+  <h3><a NAME="_Toc432863215">Starting, Stopping and Removing Disks</a></h3>
+  <p ALIGN="justify">Use the Start Disk, Stop Disk, and Remove Disk options of the Disk menu
+  to carry out these operations.</p>
+  <p ALIGN="justify">The distinction between stopping and removing a disk (as opposed to
+  other servers, which can only be removed, not stopped) is that stopping a disk is a
+  temporary operation. The disk may no longer be available, but it can always be restarted
+  later.</p>
+  <p ALIGN="justify">Stopped disks may still be seen with the View|Disks option, but removed
+  disks are gone and their physical file has been removed. </p>
+  <p ALIGN="justify">The Start Disk option requires a launcher to be running on the
+  host:port combination of the disk to restart the disk. When the disk is restarted, it will
+  be automatically mounted to its previous location. No data will be lost.</p>
+  <h3><a NAME="_Toc432863216">Mounting Disks</a></h3>
+  <p ALIGN="justify">The administrator may mount a disk to any valid directory in the
+  namespace, or unmount the disk. An unmounted disk is invisible to user programs and
+  consoles. </p>
+  <p ALIGN="justify">Although the usual practice will be to mount a disk to a subdirectory
+  of the root directory (/), this is not required. One disk can, in effect, appear to users
+  as a subdirectory of another. This is not advised, since the subdirectory disk will become
+  inaccessible if its parent is stopped or removed.</p>
+  <p ALIGN="justify">Use absolute pathnames when mounting disks. The mount points will be
+  listed by the View | Disks option.</p>
+  <p ALIGN="justify">&nbsp;</p>
+  <h2><a NAME="_Toc432863217">Managing Servers</a></h2>
+  <h3><a NAME="_Toc432863218">Types of Servers</a></h3>
+  <p ALIGN="justify">TOS has five types of servers:</p>
+  <ul>
+    <li>Launchers. These are dealt with in the Managing Launchers section of this document. </li>
+    <li>Disks. See the Managing Disks section. </li>
+    <li>Filename servers. These are responsible for referring name-based client requests for
+      files to the correct disk </li>
+    <li>Pipe servers. These are responsible for the running of the TOS interprocess
+      communication system. </li>
+    <li>Sync servers. These manage the three object types that TOS user processes use to
+      coordinate activities: mutexes, semaphores, and signals.&nbsp; </li>
+  </ul>
+  <h3><a NAME="_Toc432863219">Filename Servers</a></h3>
+  <p ALIGN="justify">Filename servers are responsible for holding the tables mounting disks
+  to directory names. Every time a user program wishes to open a file, it must ask a
+  filename server for a reference to the correct disk server.</p>
+  <h3><a NAME="_Toc432863220">Pipe Servers</a></h3>
+  <p>TOS pipes, modelled after the named-pipe mechanism of Windows NT, provide a full-duplex
+  method for two threads in different TOS processes to exchange data asynchronously. User
+  programs can create a pipe by name; other programs connect to the same pipe by its name,
+  without having to know any of the details of the pipe's creator and its location. Both
+  ends of the pipe can even be passed as parameters to other threads or processes without
+  affecting the other end, or even data already within the pipe.</p>
+  <p ALIGN="justify">The actual sending and receiving of data is carried out by the pipe
+  servers. Every pipe in the TOS system, along with the host:port of the server running it,
+  is listed in the Pipes option of the View menu.</p>
+  <h3><a NAME="_Toc432863221">Sync Servers</a></h3>
+  <p ALIGN="justify">Sync servers manage the objects that TOS user programs use to
+  coordinate access to shared resources or act in parallel - mutexes, semaphores, and
+  signals. (See the Developer's Guide) for an explanation of these services. Their
+  functioning is very analogous to that of pipe servers - user programs can create an object
+  and pass it freely to other processes. Similarly, all sync objects can be seen by
+  selecting the Sync Objects option of the View menu.</p>
+  <h3><a NAME="_Toc432863222">Default Servers</a></h3>
+  <p ALIGN="justify">When the first launcher of the TOS system is started, it creates one
+  filename server, one pipe server, and one sync server. Each new launcher that starts
+  connects to the three existing servers. Thus, each launcher has one connection to one
+  server of each type, which is referred to here as its default server.</p>
+  <p ALIGN="justify">Launchers change their default server if the Administrator has them
+  start a server on their own host listening on their port (see below, Starting and Stopping
+  Servers). </p>
+  <p ALIGN="justify">Whenever a user process needs a reference to a server, it asks its
+  launcher to provide one. The launcher will provide it the reference of its default server.
+  Each server is connected to every other server, so a reference to one, is, in effect, a
+  reference to them all.</p>
+  <p ALIGN="justify">For example, to use any pipe in the system it does not matter which
+  pipe server a user application is connected to. If a pipe server does not contain the pipe
+  requested by the user, it will refer the user over to the correct pipe server
+  transparently. At no time does the application programmer even need to know where the pipe
+  is. The same is true of sync objects and sync servers.</p>
+  <p ALIGN="justify">User processes also have a default server, which will simply be the
+  same of the launcher they connect to on startup, which will in turn be the same as the
+  console that started them, if they were started from a console.</p>
+  <h3><a NAME="_Toc432863223">Adding and Removing Servers</a></h3>
+  <p ALIGN="justify">Any launcher may be used to create a new server, with the sole
+  restriction being that no host:port combination may have more than one of the same server
+  type. Once a new server has been created, any user process may make use of it to access
+  any disk, pipe, or sync object in the TOS system, as the case may be. Removing a server
+  will remove access to those particular objects managed by that server, but will leave
+  unaffected access to objects in other servers. </p>
+  <p ALIGN="justify">Use the Create Server and Remove Server options in the Servers menu to
+  carry out additions and removals. Creating new servers is particularly advisable when the
+  number of pipes or sync objects on one particular server has become particularly large.
+  Removing a server should normally not be done at all, given its destabilizing impact on
+  user programs.</p>
+  <a NAME="_Toc432863224"><h2>Managing Processes and Objects</a></h2>
+  <h3><a NAME="_Toc432863225">Process Management</a></h3>
+  <p ALIGN="justify">Every TOS client process, when it starts, connects to a launcher and
+  registers its presence with a launcher. The Administrator provides a convenient view of
+  all running processes from the Processes option on the View menu. </p>
+  <h3><a NAME="_Toc432863226">Deadlock Management</a></h3>
+  <p ALIGN="justify">One of the central problems of any operating system that makes use of
+  interprocess primitives is the possibility of deadlock. One process might be inside a
+  mutex critical section and waiting on a semaphore, which another process has not released
+  because it is waiting on the other process' mutex! Without intervention, the two could
+  remain stuck in deadlock forever.</p>
+  <p ALIGN="justify">Being a comparatively small system, TOS does not have an automatic
+  deadlock detection system. User programmers may make use of host-dependent methods (such
+  as the UNIX kill command, or the Ctrl-C command) but this has obvious drawbacks.</p>
+  <h4 ALIGN="justify">The TOS Approach</h4>
+  <p ALIGN="justify">TOS' solution is to allow manual intervention by system administrators.
+  From the Command menu, the administrator can kill any running process. This is made
+  possible by the fact that every running process is also a Java RMI server, exporting an
+  interface that allows it to receive server calls such as resuming and suspending a thread
+  - and, of course, to in effect commit suicide.</p>
+  <p ALIGN="justify">Such a drastic approach is, of course, not usually going to be the best
+  way to handle a deadlock. The synchronization object can be removed from the system
+  instead. That does risk wreaking havoc inside user applications, but at least they are not
+  suddenly terminated with little warning. A third method is merely to release the object,
+  which will allow all waiting threads to continue their operation. That will not help
+  certain situations (such as if a process is refusing to relinquish ownership of an object)
+  but it can nonetheless make a considerable difference.</p>
+</blockquote>
+</body>
+</html>
